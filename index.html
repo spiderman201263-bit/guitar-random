@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>馃幐 小谢褍褔邪泄薪邪褟 锌械褋薪褟</title>
+<title>🎸 Случайная песня</title>
 <style>
-:root{--bg:#101214;--card:#1b1e22;--card2:#25292e;--text:#f5f6f7;--muted:#9da3aa;--accent:#ffcc33;--green:#39d98a}
+:root{--bg:#101214;--card:#1b1e22;--card2:#25292e;--text:#f5f6f7;--muted:#9da3aa;--accent:#ffcc33}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
 button,select{font:inherit}
@@ -19,7 +19,7 @@ select,.small{background:var(--card2);color:var(--text);border:1px solid #333840
 .badge{display:inline-block;color:var(--accent);background:#3a321c;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:700}
 .song{font-size:28px;font-weight:800;line-height:1.12;margin-top:16px}
 .artist{font-size:18px;color:#c8cdd2;margin-top:7px}
-.chords{font-size:20px;letter-spacing:.4px;margin:22px 0 15px;color:#fff}
+.chords{font-size:20px;letter-spacing:.4px;margin:22px 0 15px}
 .tags{display:flex;gap:8px;flex-wrap:wrap}
 .tag{background:var(--card2);padding:8px 10px;border-radius:11px;color:#dfe3e6;font-size:13px}
 .actions{display:grid;grid-template-columns:1.5fr 1fr;gap:10px;margin-top:12px}
@@ -39,239 +39,427 @@ select,.small{background:var(--card2);color:var(--text);border:1px solid #333840
 @media(max-width:380px){.song{font-size:24px}.controls{grid-template-columns:1fr}}
 </style>
 </head>
+
 <body>
 <div class="app">
+
 <header>
-  <div class="logo">馃幐 小谢褍褔邪泄薪邪褟 锌械褋薪褟</div>
+  <div class="logo">🎸 Случайная песня</div>
   <div class="count" id="count"></div>
 </header>
 
 <div class="controls">
   <select id="genre">
-    <option value="袙褋械 卸邪薪褉褘">馃幍 袙褋械 卸邪薪褉褘</option>
-    <option>袪褍褋褋泻懈泄 褉芯泻</option>
-    <option>袩邪薪泻</option>
-    <option>袩芯锌 / 褉芯泻</option>
+    <option value="Все жанры">🎵 Все жанры</option>
+    <option>Русский рок</option>
+    <option>Панк</option>
+    <option>Поп / рок</option>
   </select>
+
   <select id="level">
-    <option value="0">猸� 袥褞斜邪褟 褋谢芯卸薪芯褋褌褜</option>
-    <option value="1">猸� 袥械谐泻芯</option>
-    <option value="2">猸愨瓙 小褉械写薪械</option>
-    <option value="3">猸愨瓙猸� 小谢芯卸薪芯</option>
+    <option value="0">⭐ Любая сложность</option>
+    <option value="1">⭐ Легко</option>
+    <option value="2">⭐⭐ Средне</option>
+    <option value="3">⭐⭐⭐ Сложно</option>
   </select>
 </div>
 
 <div class="card">
-  <div class="badge" id="badge">孝袙袨携 袩袝小袧携</div>
-  <div class="song" id="song">袩邪褔泻邪 褋懈谐邪褉械褌</div>
-  <div class="artist" id="artist">袣懈薪芯</div>
-  <div class="chords" id="chords">Am 路 C 路 Dm 路 E</div>
+  <div class="badge">ТВОЯ ПЕСНЯ</div>
+
+  <div class="song" id="song">Пачка сигарет</div>
+
+  <div class="artist" id="artist">Кино</div>
+
+  <div class="chords" id="chords">
+    Am · C · Dm · E
+  </div>
+
   <div class="tags">
-    <div class="tag" id="stars">猸愨瓙鈽嗏槅鈽�</div>
-    <div class="tag" id="genreName">袪褍褋褋泻懈泄 褉芯泻</div>
+    <div class="tag" id="stars">⭐⭐☆☆☆</div>
+    <div class="tag" id="genreName">Русский рок</div>
   </div>
 </div>
 
 <div class="actions">
-  <button class="btn primary" onclick="randomSong()">馃攢 袛褉褍谐邪褟 锌械褋薪褟</button>
-  <button class="btn secondary" onclick="toggleFavorite()" id="favBtn">鈾� 袠蟹斜褉邪薪薪芯械</button>
+  <button class="btn primary" onclick="randomSong()">
+    🔀 Другая песня
+  </button>
+
+  <button class="btn secondary" onclick="toggleFavorite()" id="favBtn">
+    ♡ Избранное
+  </button>
 </div>
 
 <div class="favline">
-  <span id="favCount">鉂わ笍 袠蟹斜褉邪薪薪褘褏: 0</span>
-  <button class="small" onclick="makeSet()">馃帳 小械褌 薪邪 30 屑懈薪褍褌</button>
+  <span id="favCount">❤️ Избранных: 0</span>
+
+  <button class="small" onclick="makeSet()">
+    🎤 Сет на 30 минут
+  </button>
 </div>
 
 <div class="section setlist" id="setlist">
-  <h3>馃帳 孝胁芯泄 褋械褌</h3>
+  <h3>🎤 Твой сет</h3>
   <div id="setItems"></div>
 </div>
 
-<div class="foot">100 锌械褋械薪 路 懈谐褉邪泄 褔褌芯 胁褘锌邪写械褌 馃幉</div>
+<div class="foot">
+  110 песен · играй что выпадет 🎲
+</div>
+
 </div>
 
 <script>
+
 const songs=[
-{artist:"袣懈薪芯",song:"袩邪褔泻邪 褋懈谐邪褉械褌",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袣懈薪芯",song:"袟胁械蟹写邪 锌芯 懈屑械薪懈 小芯谢薪褑械",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袣懈薪芯",song:"袣褍泻褍褕泻邪",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袣懈薪芯",song:"袚褉褍锌锌邪 泻褉芯胁懈",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袣懈薪芯",song:"袩械褉械屑械薪",chords:"Am 路 Dm 路 C 路 E",level:3,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袣懈薪芯",song:"袣芯谐写邪 褌胁芯褟 写械胁褍褕泻邪 斜芯谢褜薪邪",chords:"Am 路 C 路 Dm 路 E",level:1,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袣懈薪芯",song:"袙芯褋褜屑懈泻谢邪褋褋薪懈褑邪",chords:"Am 路 C 路 Dm 路 E",level:1,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袣懈薪芯",song:"袗谢褞屑懈薪懈械胁褘械 芯谐褍褉褑褘",chords:"Am 路 C 路 Dm 路 E",level:1,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袣懈薪芯",song:"袦邪屑邪, 屑褘 胁褋械 褋芯褕谢懈 褋 褍屑邪",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袣懈薪芯",song:"小锌芯泻芯泄薪邪褟 薪芯褔褜",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"小锌谢懈薪",song:"袙褘褏芯写邪 薪械褌",chords:"Em 路 C 路 G 路 D",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"小锌谢懈薪",song:"袪芯屑邪薪褋",chords:"Am 路 Dm 路 G 路 C",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"小锌谢懈薪",song:"袦芯褢 褋械褉写褑械",chords:"Am 路 C 路 G 路 Em",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"小锌谢懈薪",song:"袥懈薪懈褟 卸懈蟹薪懈",chords:"Am 路 C 路 G 路 Em",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袛袛孝",song:"效褌芯 褌邪泻芯械 芯褋械薪褜",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袛袛孝",song:"协褌芯 胁褋褢",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袛袛孝",song:"袩褉芯褋胁懈褋褌械谢邪",chords:"Am 路 C 路 G 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袛袛孝",song:"袦械褌械谢褜",chords:"Am 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袛袛孝",song:"袪芯写懈薪邪",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"效邪泄褎",song:"袗褉谐械薪褌懈薪邪 鈥� 携屑邪泄泻邪 5:0",chords:"D 路 A 路 G 路 Em",level:1,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"效邪泄褎",song:"袨泄-泄芯",chords:"Am 路 C 路 G 路 D",level:1,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"效邪泄褎",song:"袧懈泻褌芯 薪械 褍褋谢褘褕懈褌",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"效邪泄褎",song:"17 谢械褌",chords:"Am 路 C 路 G 路 D",level:1,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袧邪褍褌懈谢褍褋 袩芯屑锌懈谢懈褍褋",song:"袚褍写斜邪泄, 袗屑械褉懈泻邪",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袧邪褍褌懈谢褍褋 袩芯屑锌懈谢懈褍褋",song:"携 褏芯褔褍 斜褘褌褜 褋 褌芯斜芯泄",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袧邪褍褌懈谢褍褋 袩芯屑锌懈谢懈褍褋",song:"袣褉褘谢褜褟",chords:"Am 路 C 路 G 路 Em",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袧邪褍褌懈谢褍褋 袩芯屑锌懈谢懈褍褋",song:"袩褉芯谐褍谢泻懈 锌芯 胁芯写械",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袗谐邪褌邪 袣褉懈褋褌懈",song:"袣邪泻 薪邪 胁芯泄薪械",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袗谐邪褌邪 袣褉懈褋褌懈",song:"袨锌懈褍屑 写谢褟 薪懈泻芯谐芯",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袗谐邪褌邪 袣褉懈褋褌懈",song:"小泻邪蟹芯褔薪邪褟 褌邪泄谐邪",chords:"Am 路 C 路 G 路 Em",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袘懈-2",song:"袩芯谢泻芯胁薪懈泻褍 薪懈泻褌芯 薪械 锌懈褕械褌",chords:"Am 路 F 路 C 路 G",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袘懈-2",song:"袦芯泄 褉芯泻-薪-褉芯谢谢",chords:"Am 路 F 路 C 路 G",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袘懈-2",song:"袙邪褉胁邪褉邪",chords:"Am 路 C 路 G 路 D",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袘懈-2",song:"小械褉械斜褉芯",chords:"Am 路 C 路 G 路 D",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袦褍屑懈泄 孝褉芯谢谢褜",song:"袙谢邪写懈胁芯褋褌芯泻 2000",chords:"Am 路 C 路 D 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袦褍屑懈泄 孝褉芯谢谢褜",song:"袦械写胁械写懈褑邪",chords:"Am 路 C 路 G 路 D",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袦褍屑懈泄 孝褉芯谢谢褜",song:"校褌械泻邪泄",chords:"Am 路 C 路 G 路 D",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袟械屑褎懈褉邪",song:"啸芯褔械褕褜?",chords:"Am 路 F 路 C 路 G",level:3,genre:"袩芯锌 / 褉芯泻"},
-{artist:"袟械屑褎懈褉邪",song:"袪芯屑邪褕泻懈",chords:"Am 路 C 路 G 路 D",level:2,genre:"袩芯锌 / 褉芯泻"},
-{artist:"袟械屑褎懈褉邪",song:"袠褋泻邪谢邪",chords:"Am 路 F 路 C 路 G",level:2,genre:"袩芯锌 / 褉芯泻"},
-{artist:"袟械屑褎懈褉邪",song:"袩褉芯褋褌懈 屑械薪褟 屑芯褟 谢褞斜芯胁褜",chords:"Am 路 C 路 G 路 D",level:2,genre:"袩芯锌 / 褉芯泻"},
-{artist:"袣芯褉芯谢褜 懈 楔褍褌",song:"袥械褋薪懈泻",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袩邪薪泻"},
-{artist:"袣芯褉芯谢褜 懈 楔褍褌",song:"袣褍泻谢邪 泻芯谢写褍薪邪",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袩邪薪泻"},
-{artist:"袣芯褉芯谢褜 懈 楔褍褌",song:"袩褉褘谐薪褍 褋芯 褋泻邪谢褘",chords:"Am 路 C 路 G 路 D",level:2,genre:"袩邪薪泻"},
-{artist:"袣芯褉芯谢褜 懈 楔褍褌",song:"袝谢懈 屑褟褋芯 屑褍卸懈泻懈",chords:"Am 路 C 路 Dm 路 E",level:1,genre:"袩邪薪泻"},
-{artist:"袣芯褉芯谢褜 懈 楔褍褌",song:"袩褉芯泻谢褟褌褘泄 褋褌邪褉褘泄 写芯屑",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袩邪薪泻"},
-{artist:"小械泻褌芯褉 谐邪蟹邪",song:"袥懈褉懈泻邪",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袩邪薪泻"},
-{artist:"小械泻褌芯褉 谐邪蟹邪",song:"30 谢械褌",chords:"Am 路 C 路 G 路 D",level:1,genre:"袩邪薪泻"},
-{artist:"小械泻褌芯褉 谐邪蟹邪",song:"孝褍屑邪薪",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袩邪薪泻"},
-{artist:"小械泻褌芯褉 谐邪蟹邪",song:"袩芯褉邪 写芯屑芯泄",chords:"Am 路 C 路 Dm 路 E",level:1,genre:"袩邪薪泻"},
-{artist:"小械泻褌芯褉 谐邪蟹邪",song:"袛械屑芯斜懈谢懈蟹邪褑懈褟",chords:"Am 路 C 路 G 路 D",level:1,genre:"袩邪薪泻"},
-{artist:"袥褟锌懈褋 孝褉褍斜械褑泻芯泄",song:"袗褍",chords:"Am 路 C 路 D 路 E",level:2,genre:"袩邪薪泻"},
-{artist:"袥褟锌懈褋 孝褉褍斜械褑泻芯泄",song:"孝褘 泻懈薪褍谢邪",chords:"Am 路 C 路 G 路 D",level:2,genre:"袩邪薪泻"},
-{artist:"袥褟锌懈褋 孝褉褍斜械褑泻芯泄",song:"袙芯懈薪褘 褋胁械褌邪",chords:"Am 路 C 路 G 路 D",level:2,genre:"袩邪薪泻"},
-{artist:"袥械薪懈薪谐褉邪写",song:"WWW",chords:"Am 路 C 路 G 路 D",level:2,genre:"袩邪薪泻"},
-{artist:"袥械薪懈薪谐褉邪写",song:"协泻褋锌芯薪邪褌",chords:"Am 路 C 路 G 路 D",level:2,genre:"袩邪薪泻"},
-{artist:"袥械薪懈薪谐褉邪写",song:"袙 袩懈褌械褉械 鈥� 锌懈褌褜",chords:"Am 路 C 路 G 路 D",level:1,genre:"袩邪薪泻"},
-{artist:"袥械薪懈薪谐褉邪写",song:"袦薪械 斜褘 胁 薪械斜芯",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袩邪薪泻"},
-{artist:"袗谢懈褋邪",song:"孝褉邪褋褋邪 袝-95",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袗谢懈褋邪",song:"袧械斜芯 褋谢邪胁褟薪",chords:"Am 路 C 路 G 路 D",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袗谢懈褋邪",song:"袦芯褢 锌芯泻芯谢械薪懈械",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袩懈泻薪懈泻",song:"袝谐懈锌褌褟薪懈薪",chords:"Am 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袩懈泻薪懈泻",song:"校 褕邪屑邪薪邪 褌褉懈 褉褍泻懈",chords:"Am 路 C 路 Dm 路 E",level:3,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袩懈泻薪懈泻",song:"袠蟹 屑褘褕械谢芯胁泻懈",chords:"Am 路 C 路 G 路 D",level:3,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袣褉械屑邪褌芯褉懈泄",song:"袦褍褋芯褉薪褘泄 胁械褌械褉",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袣褉械屑邪褌芯褉懈泄",song:"袣邪褌屑邪薪写褍",chords:"Am 路 C 路 G 路 D",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"效懈卸 & Co",song:"袨 谢褞斜胁懈",chords:"Am 路 C 路 Dm 路 E",level:1,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"效懈卸 & Co",song:"袙芯褌 锌褍谢褟 锌褉芯褋胁懈褋褌械谢邪",chords:"Am 路 C 路 G 路 D",level:1,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"效懈卸 & Co",song:"袩械褉械泻褉褢褋褌芯泻",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"效懈卸 & Co",song:"袗 薪械 褋锌械褌褜 谢懈 屑薪械 锌械褋薪褞",chords:"Am 路 C 路 G 路 D",level:1,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袣邪谢懈薪芯胁 屑芯褋褌",song:"袪芯写薪邪褟",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袣邪谢懈薪芯胁 屑芯褋褌",song:"校褏芯写懈谢懈 懈蟹 写芯屑邪",chords:"Am 路 C 路 G 路 D",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袦邪褕懈薪邪 胁褉械屑械薪懈",song:"袩芯胁芯褉芯褌",chords:"Am 路 Dm 路 G 路 C",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袦邪褕懈薪邪 胁褉械屑械薪懈",song:"袟邪 褌械褏, 泻褌芯 胁 屑芯褉械",chords:"Am 路 C 路 G 路 D",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袦邪褕懈薪邪 胁褉械屑械薪懈",song:"袣芯褋褌褢褉",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袙芯褋泻褉械褋械薪懈械",song:"袣褌芯 胁懈薪芯胁邪褌",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袙芯褋泻褉械褋械薪懈械",song:"袦褍蟹褘泻邪薪褌",chords:"Am 路 C 路 G 路 D",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袗泻胁邪褉懈褍屑",song:"袚芯褉芯写 蟹芯谢芯褌芯泄",chords:"Am 路 Dm 路 E",level:1,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袗泻胁邪褉懈褍屑",song:"袩芯械蟹写 胁 芯谐薪械",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袗泻胁邪褉懈褍屑",song:"小械褉械斜褉芯 袚芯褋锌芯写邪 屑芯械谐芯",chords:"Am 路 C 路 G 路 D",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袥褞斜褝",song:"袣芯薪褜",chords:"Am 路 C 路 Dm 路 E",level:1,genre:"袩芯锌 / 褉芯泻"},
-{artist:"袥褞斜褝",song:"袣芯屑斜邪褌",chords:"Am 路 C 路 G 路 D",level:1,genre:"袩芯锌 / 褉芯泻"},
-{artist:"袥褞斜褝",song:"袛邪胁邪泄 蟹邪",chords:"Am 路 C 路 Dm 路 E",level:1,genre:"袩芯锌 / 褉芯泻"},
-{artist:"袛袛孝",song:"袦邪屑邪 褝褌芯 褉芯泻-薪-褉芯谢谢",chords:"Am 路 C 路 G 路 D",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袧芯褔薪褘械 褋薪邪泄锌械褉褘",song:"31-褟 胁械褋薪邪",chords:"Am 路 C 路 G 路 D",level:2,genre:"袩芯锌 / 褉芯泻"},
-{artist:"袧芯褔薪褘械 褋薪邪泄锌械褉褘",song:"袗褋褎邪谢褜褌",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袩芯锌 / 褉芯泻"},
-{artist:"袧芯褔薪褘械 褋薪邪泄锌械褉褘",song:"袪褍斜械卸",chords:"Am 路 C 路 G 路 D",level:2,genre:"袩芯锌 / 褉芯泻"},
-{artist:"7袘",song:"袦芯谢芯写褘械 胁械褌褉邪",chords:"Am 路 C 路 G 路 D",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"7袘",song:"袨褋械薪褜",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"小屑褘褋谢芯胁褘械 谐邪谢谢褞褑懈薪邪褑懈懈",song:"袟邪褔械屑 褌芯锌褌邪褌褜 屑芯褞 谢褞斜芯胁褜",chords:"Am 路 C 路 G 路 D",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"小屑褘褋谢芯胁褘械 谐邪谢谢褞褑懈薪邪褑懈懈",song:"袙械褔薪芯 屑芯谢芯写芯泄",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"孝邪薪褑褘 屑懈薪褍褋",song:"袩芯谢芯胁懈薪泻邪",chords:"Am 路 C 路 G 路 D",level:1,genre:"袩芯锌 / 褉芯泻"},
-{artist:"孝邪薪褑褘 屑懈薪褍褋",song:"袚芯褉芯写",chords:"Am 路 C 路 Dm 路 E",level:1,genre:"袩芯锌 / 褉芯泻"},
-{artist:"孝邪薪褑褘 屑懈薪褍褋",song:"笑胁械褌褍褌 褑胁械褌褘",chords:"Am 路 C 路 G 路 D",level:1,genre:"袩芯锌 / 褉芯泻"},
-{artist:"袣褍泻褉褘薪懈泻褋褘",song:"袟胁械蟹写邪",chords:"Am 路 C 路 G 路 D",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袣褍泻褉褘薪懈泻褋褘",song:"袩芯 褉邪褋泻褉邪褕械薪薪芯泄 写褍褕械",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袩懈谢芯褌",song:"袪芯泻",chords:"Am 路 C 路 G 路 D",level:2,genre:"袩邪薪泻"},
-{artist:"袩懈谢芯褌",song:"小褔邪褋褌褜褟 写谢褟 胁褋械褏",chords:"Am 路 C 路 Dm 路 E",level:2,genre:"袩邪薪泻"},
-{artist:"袩懈谢芯褌",song:"袛芯褉芯谐邪 胁 褉邪泄",chords:"Am 路 C 路 G 路 D",level:2,genre:"袩邪薪泻"},
-{artist:"袗褉懈褟",song:"袘械褋锌械褔薪褘泄 邪薪谐械谢",chords:"Am 路 C 路 G 路 D",level:3,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袗褉懈褟",song:"楔褌懈谢褜",chords:"Am 路 C 路 Dm 路 E",level:3,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袗褉懈褟",song:"袙芯蟹褜屑懈 屑芯褢 褋械褉写褑械",chords:"Am 路 C 路 G 路 D",level:3,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袣褍泻褉褘薪懈泻褋褘",song:"小芯谢写邪褌褋泻邪褟 锌械褔邪谢褜",chords:"Am 路 C 路 G 路 D",level:2,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袦芯褉邪谢褜薪褘泄 泻芯写械泻褋",song:"袛芯 褋胁懈写邪薪懈褟, 屑邪屑邪",chords:"Am 路 C 路 G 路 D",level:2,genre:"袩芯锌 / 褉芯泻"},
-{artist:"袧芯谢褜",song:"袠写褍, 泻褍褉褞",chords:"Am 路 C 路 Dm 路 E",level:1,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袧芯谢褜",song:"效械谢芯胁械泻 懈 泻芯褕泻邪",chords:"Am 路 C 路 G 路 D",level:1,genre:"袪褍褋褋泻懈泄 褉芯泻"},
-{artist:"袘褉邪胁芯",song:"协褌芯褌 谐芯褉芯写",chords:"Am 路 C 路 G 路 D",level:1,genre:"袩芯锌 / 褉芯泻"},
-{artist:"袘褉邪胁芯",song:"袥褞斜懈褌械, 写械胁褍褕泻懈",chords:"Am 路 C 路 Dm 路 E",level:1,genre:"袩芯锌 / 褉芯泻"},
-{artist:"小械泻褉械褌",song:"袩褉懈胁械褌",chords:"Am 路 C 路 G 路 D",level:1,genre:"袩芯锌 / 褉芯泻"},
-{artist:"小械泻褉械褌",song:"袦芯褟 谢褞斜芯胁褜 薪邪 锌褟褌芯屑 褝褌邪卸械",chords:"Am 路 C 路 Dm 路 E",level:1,genre:"袩芯锌 / 褉芯泻"}
+
+{artist:"Кино",song:"Пачка сигарет",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"Кино",song:"Звезда по имени Солнце",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"Кино",song:"Кукушка",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"Кино",song:"Группа крови",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"Кино",song:"Перемен",chords:"Am · Dm · C · E",level:3,genre:"Русский рок"},
+{artist:"Кино",song:"Когда твоя девушка больна",chords:"Am · C · Dm · E",level:1,genre:"Русский рок"},
+{artist:"Кино",song:"Восьмиклассница",chords:"Am · C · Dm · E",level:1,genre:"Русский рок"},
+{artist:"Кино",song:"Алюминиевые огурцы",chords:"Am · C · Dm · E",level:1,genre:"Русский рок"},
+{artist:"Кино",song:"Мама, мы все сошли с ума",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"Кино",song:"Спокойная ночь",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+
+{artist:"Сплин",song:"Выхода нет",chords:"Em · C · G · D",level:2,genre:"Русский рок"},
+{artist:"Сплин",song:"Романс",chords:"Am · Dm · G · C",level:2,genre:"Русский рок"},
+{artist:"Сплин",song:"Моё сердце",chords:"Am · C · G · Em",level:2,genre:"Русский рок"},
+{artist:"Сплин",song:"Линия жизни",chords:"Am · C · G · Em",level:2,genre:"Русский рок"},
+
+{artist:"ДДТ",song:"Что такое осень",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"ДДТ",song:"Это всё",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"ДДТ",song:"Просвистела",chords:"Am · C · G · E",level:2,genre:"Русский рок"},
+{artist:"ДДТ",song:"Метель",chords:"Am · Dm · E",level:2,genre:"Русский рок"},
+{artist:"ДДТ",song:"Родина",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+
+{artist:"Чайф",song:"Аргентина — Ямайка 5:0",chords:"D · A · G · Em",level:1,genre:"Русский рок"},
+{artist:"Чайф",song:"Ой-йо",chords:"Am · C · G · D",level:1,genre:"Русский рок"},
+{artist:"Чайф",song:"Никто не услышит",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"Чайф",song:"17 лет",chords:"Am · C · G · D",level:1,genre:"Русский рок"},
+
+{artist:"Наутилус Помпилиус",song:"Гудбай, Америка",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"Наутилус Помпилиус",song:"Я хочу быть с тобой",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"Наутилус Помпилиус",song:"Крылья",chords:"Am · C · G · Em",level:2,genre:"Русский рок"},
+{artist:"Наутилус Помпилиус",song:"Прогулки по воде",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+
+{artist:"Агата Кристи",song:"Как на войне",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"Агата Кристи",song:"Опиум для никого",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"Агата Кристи",song:"Сказочная тайга",chords:"Am · C · G · Em",level:2,genre:"Русский рок"},
+
+{artist:"Би-2",song:"Полковнику никто не пишет",chords:"Am · F · C · G",level:2,genre:"Русский рок"},
+{artist:"Би-2",song:"Мой рок-н-ролл",chords:"Am · F · C · G",level:2,genre:"Русский рок"},
+{artist:"Би-2",song:"Варвара",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+{artist:"Би-2",song:"Серебро",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+
+{artist:"Мумий Тролль",song:"Владивосток 2000",chords:"Am · C · D · E",level:2,genre:"Русский рок"},
+{artist:"Мумий Тролль",song:"Медведица",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+{artist:"Мумий Тролль",song:"Утекай",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+
+{artist:"Земфира",song:"Хочешь?",chords:"Am · F · C · G",level:3,genre:"Поп / рок"},
+{artist:"Земфира",song:"Ромашки",chords:"Am · C · G · D",level:2,genre:"Поп / рок"},
+{artist:"Земфира",song:"Искала",chords:"Am · F · C · G",level:2,genre:"Поп / рок"},
+{artist:"Земфира",song:"Прости меня моя любовь",chords:"Am · C · G · D",level:2,genre:"Поп / рок"},
+
+{artist:"Король и Шут",song:"Лесник",chords:"Am · C · Dm · E",level:2,genre:"Панк"},
+{artist:"Король и Шут",song:"Кукла колдуна",chords:"Am · C · Dm · E",level:2,genre:"Панк"},
+{artist:"Король и Шут",song:"Прыгну со скалы",chords:"Am · C · G · D",level:2,genre:"Панк"},
+{artist:"Король и Шут",song:"Ели мясо мужики",chords:"Am · C · Dm · E",level:1,genre:"Панк"},
+{artist:"Король и Шут",song:"Проклятый старый дом",chords:"Am · C · Dm · E",level:2,genre:"Панк"},
+
+{artist:"Сектор газа",song:"Лирика",chords:"Am · C · Dm · E",level:2,genre:"Панк"},
+{artist:"Сектор газа",song:"30 лет",chords:"Am · C · G · D",level:1,genre:"Панк"},
+{artist:"Сектор газа",song:"Туман",chords:"Am · C · Dm · E",level:2,genre:"Панк"},
+{artist:"Сектор газа",song:"Пора домой",chords:"Am · C · Dm · E",level:1,genre:"Панк"},
+{artist:"Сектор газа",song:"Демобилизация",chords:"Am · C · G · D",level:1,genre:"Панк"},
+
+{artist:"Ляпис Трубецкой",song:"Ау",chords:"Am · C · D · E",level:2,genre:"Панк"},
+{artist:"Ляпис Трубецкой",song:"Ты кинула",chords:"Am · C · G · D",level:2,genre:"Панк"},
+{artist:"Ляпис Трубецкой",song:"Воины света",chords:"Am · C · G · D",level:2,genre:"Панк"},
+
+{artist:"Ленинград",song:"WWW",chords:"Am · C · G · D",level:2,genre:"Панк"},
+{artist:"Ленинград",song:"Экспонат",chords:"Am · C · G · D",level:2,genre:"Панк"},
+{artist:"Ленинград",song:"В Питере — пить",chords:"Am · C · G · D",level:1,genre:"Панк"},
+{artist:"Ленинград",song:"Мне бы в небо",chords:"Am · C · Dm · E",level:2,genre:"Панк"},
+
+{artist:"Алиса",song:"Трасса Е-95",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"Алиса",song:"Небо славян",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+{artist:"Алиса",song:"Моё поколение",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+
+{artist:"Пикник",song:"Египтянин",chords:"Am · Dm · E",level:2,genre:"Русский рок"},
+{artist:"Пикник",song:"У шамана три руки",chords:"Am · C · Dm · E",level:3,genre:"Русский рок"},
+{artist:"Пикник",song:"Из мышеловки",chords:"Am · C · G · D",level:3,genre:"Русский рок"},
+
+{artist:"Крематорий",song:"Мусорный ветер",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"Крематорий",song:"Катманду",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+
+{artist:"Чиж & Co",song:"О любви",chords:"Am · C · Dm · E",level:1,genre:"Русский рок"},
+{artist:"Чиж & Co",song:"Вот пуля просвистела",chords:"Am · C · G · D",level:1,genre:"Русский рок"},
+{artist:"Чиж & Co",song:"Перекрёсток",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"Чиж & Co",song:"А не спеть ли мне песню",chords:"Am · C · G · D",level:1,genre:"Русский рок"},
+
+{artist:"Калинов мост",song:"Родная",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"Калинов мост",song:"Уходили из дома",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+
+{artist:"Машина времени",song:"Поворот",chords:"Am · Dm · G · C",level:2,genre:"Русский рок"},
+{artist:"Машина времени",song:"За тех, кто в море",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+{artist:"Машина времени",song:"Костёр",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+
+{artist:"Воскресение",song:"Кто виноват",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"Воскресение",song:"Музыкант",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+
+{artist:"Аквариум",song:"Город золотой",chords:"Am · Dm · E",level:1,genre:"Русский рок"},
+{artist:"Аквариум",song:"Поезд в огне",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{artist:"Аквариум",song:"Серебро Господа моего",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+
+{artist:"Любэ",song:"Конь",chords:"Am · C · Dm · E",level:1,genre:"Поп / рок"},
+{artist:"Любэ",song:"Комбат",chords:"Am · C · G · D",level:1,genre:"Поп / рок"},
+{artist:"Любэ",song:"Давай за",chords:"Am · C · Dm · E",level:1,genre:"Поп / рок"},
+
+{artist:"ДДТ",song:"Мама это рок-н-ролл",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+
+{artist:"Ночные снайперы",song:"31-я весна",chords:"Am · C · G · D",level:2,genre:"Поп / рок"},
+{artist:"Ночные снайперы",song:"Асфальт",chords:"Am · C · Dm · E",level:2,genre:"Поп / рок"},
+{artist:"Ночные снайперы",song:"Рубеж",chords:"Am · C · G · D",level:2,genre:"Поп / рок"},
+
+{artist:"7Б",song:"Молодые ветра",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+{artist:"7Б",song:"Осень",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+
+{artist:"Смысловые галлюцинации",song:"Зачем топтать мою любовь",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+{artist:"Смысловые галлюцинации",song:"Вечно молодой",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+
+{artist:"Танцы минус",song:"Половинка",chords:"Am · C · G · D",level:1,genre:"Поп / рок"},
+{artist:"Танцы минус",song:"Город",chords:"Am · C · Dm · E",level:1,genre:"Поп / рок"},
+{artist:"Танцы минус",song:"Цветут цветы",chords:"Am · C · G · D",level:1,genre:"Поп / рок"},
+
+{artist:"Кукрыниксы",song:"Звезда",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+{artist:"Кукрыниксы",song:"По раскрашенной душе",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+
+{artist:"Пилот",song:"Рок",chords:"Am · C · G · D",level:2,genre:"Панк"},
+{artist:"Пилот",song:"Счастья для всех",chords:"Am · C · Dm · E",level:2,genre:"Панк"},
+{artist:"Пилот",song:"Дорога в рай",chords:"Am · C · G · D",level:2,genre:"Панк"},
+
+{artist:"Ария",song:"Беспечный ангел",chords:"Am · C · G · D",level:3,genre:"Русский рок"},
+{artist:"Ария",song:"Штиль",chords:"Am · C · Dm · E",level:3,genre:"Русский рок"},
+{artist:"Ария",song:"Возьми моё сердце",chords:"Am · C · G · D",level:3,genre:"Русский рок"},
+
+{artist:"Кукрыниксы",song:"Солдатская печаль",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+
+{artist:"Моральный кодекс",song:"До свидания, мама",chords:"Am · C · G · D",level:2,genre:"Поп / рок"},
+
+{artist:"Ноль",song:"Иду, курю",chords:"Am · C · Dm · E",level:1,genre:"Русский рок"},
+{artist:"Ноль",song:"Человек и кошка",chords:"Am · C · G · D",level:1,genre:"Русский рок"},
+
+{artist:"Браво",song:"Этот город",chords:"Am · C · G · D",level:1,genre:"Поп / рок"},
+{artist:"Браво",song:"Любите, девушки",chords:"Am · C · Dm · E",level:1,genre:"Поп / рок"},
+
+{artist:"Секрет",song:"Привет",chords:"Am · C · G · D",level:1,genre:"Поп / рок"},
+{artist:"Секрет",song:"Моя любовь на пятом этаже",chords:"Am · C · Dm · E",level:1,genre:"Поп / рок"}
+
 ];
 
 let current=0;
-let favorites=JSON.parse(localStorage.getItem("guitarFavorites")||"[]");
+
+let favorites=JSON.parse(
+  localStorage.getItem("guitarFavorites")||"[]"
+);
 
 function filtered(){
+
   const g=document.getElementById("genre").value;
   const l=Number(document.getElementById("level").value);
-  return songs.map((s,i)=>({s,i})).filter(x=>(g==="袙褋械 卸邪薪褉褘"||x.s.genre===g)&&(l===0||x.s.level===l));
+
+  return songs
+    .map((s,i)=>({s,i}))
+    .filter(x=>
+      (g==="Все жанры"||x.s.genre===g)&&
+      (l===0||x.s.level===l)
+    );
 }
 
-function stars(level){return "猸�".repeat(level)+"鈽�".repeat(5-level)}
+function stars(level){
+
+  return "⭐".repeat(level)+
+         "☆".repeat(5-level);
+
+}
 
 function show(i){
+
   current=i;
+
   const s=songs[i];
+
   document.getElementById("song").textContent=s.song;
+
   document.getElementById("artist").textContent=s.artist;
+
   document.getElementById("chords").textContent=s.chords;
-  document.getElementById("stars").textContent=stars(s.level);
-  document.getElementById("genreName").textContent=s.genre;
-  document.getElementById("favBtn").textContent=isFav(i)?"鈾� 袙 懈蟹斜褉邪薪薪芯屑":"鈾� 袙 懈蟹斜褉邪薪薪芯械";
-  document.getElementById("favCount").textContent="鉂わ笍 袠蟹斜褉邪薪薪褘褏: "+favorites.length;
+
+  document.getElementById("stars").textContent=
+    stars(s.level);
+
+  document.getElementById("genreName").textContent=
+    s.genre;
+
+  document.getElementById("favBtn").textContent=
+    isFav(i)?"♥ В избранном":"♡ В избранное";
+
+  document.getElementById("favCount").textContent=
+    "❤️ Избранных: "+favorites.length;
+
 }
 
 function randomSong(){
+
   const list=filtered();
-  if(!list.length){alert("袧械褌 锌械褋械薪 褋 褌邪泻懈屑懈 褎懈谢褜褌褉邪屑懈");return}
-  let pick=list[Math.floor(Math.random()*list.length)].i;
-  if(list.length>1 && pick===current) pick=list[Math.floor(Math.random()*list.length)].i;
+
+  if(!list.length){
+
+    alert("Нет песен с такими фильтрами");
+
+    return;
+  }
+
+  let pick=
+    list[Math.floor(Math.random()*list.length)].i;
+
+  if(list.length>1 && pick===current){
+
+    pick=
+      list[Math.floor(Math.random()*list.length)].i;
+
+  }
+
   show(pick);
+
 }
 
-function isFav(i){return favorites.includes(i)}
+function isFav(i){
+
+  return favorites.includes(i);
+
+}
 
 function toggleFavorite(){
+
   const p=favorites.indexOf(current);
-  if(p>=0) favorites.splice(p,1); else favorites.push(current);
-  localStorage.setItem("guitarFavorites",JSON.stringify(favorites));
+
+  if(p>=0){
+
+    favorites.splice(p,1);
+
+  }else{
+
+    favorites.push(current);
+
+  }
+
+  localStorage.setItem(
+    "guitarFavorites",
+    JSON.stringify(favorites)
+  );
+
   show(current);
+
 }
 
 function makeSet(){
+
   const list=filtered().map(x=>x.i);
-  if(!list.length){alert("袧械褌 锌械褋械薪 写谢褟 褋械褌邪");return}
-  const pool=[...list].sort(()=>Math.random()-.5);
+
+  if(!list.length){
+
+    alert("Нет песен для сета");
+
+    return;
+  }
+
+  const pool=[...list].sort(
+    ()=>Math.random()-.5
+  );
+
   const selected=[];
   const artists=new Set();
+
   for(const i of pool){
-    if(!artists.has(songs[i].artist)||selected.length>=10){selected.push(i);artists.add(songs[i].artist)}
-    if(selected.length===10)break;
+
+    if(
+      !artists.has(songs[i].artist)||
+      selected.length>=10
+    ){
+
+      selected.push(i);
+
+      artists.add(songs[i].artist);
+
+    }
+
+    if(selected.length===10) break;
+
   }
-  while(selected.length<Math.min(10,list.length)) selected.push(pool[selected.length]);
-  document.getElementById("setItems").innerHTML=selected.map((i,n)=>
-    `<div class="setitem"><b>${n+1}. ${songs[i].artist} 鈥� ${songs[i].song}</b><span>${songs[i].chords} 路 ${stars(songs[i].level)}</span></div>`
-  ).join("");
-  document.getElementById("setlist").style.display="block";
+
+  while(
+    selected.length<
+    Math.min(10,list.length)
+  ){
+
+    selected.push(
+      pool[selected.length]
+    );
+
+  }
+
+  document.getElementById("setItems").innerHTML=
+
+    selected.map((i,n)=>
+
+      `<div class="setitem">
+        <b>
+          ${n+1}. ${songs[i].artist} — ${songs[i].song}
+        </b>
+
+        <span>
+          ${songs[i].chords} · ${stars(songs[i].level)}
+        </span>
+      </div>`
+
+    ).join("");
+
+  document.getElementById("setlist")
+    .style.display="block";
+
 }
 
-document.getElementById("genre").addEventListener("change",randomSong);
-document.getElementById("level").addEventListener("change",randomSong);
-document.getElementById("count").textContent=songs.length+" 锌械褋械薪";
+document
+  .getElementById("genre")
+  .addEventListener("change",randomSong);
+
+document
+  .getElementById("level")
+  .addEventListener("change",randomSong);
+
+document.getElementById("count").textContent=
+  songs.length+" песен";
+
 show(0);
 
 try{
+
   if(window.Telegram?.WebApp){
+
     Telegram.WebApp.ready();
+
     Telegram.WebApp.expand();
+
   }
+
 }catch(e){}
+
 </script>
+
 </body>
 </html>
