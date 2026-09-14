@@ -3,2340 +3,1940 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <title>🎸 Случайная песня</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
+:root{
+  --bg:#0e0f12;
+  --card:#17191e;
+  --card2:#1e2128;
+  --text:#f3f3f3;
+  --muted:#9297a3;
+  --accent:#ffb52e;
+  --green:#5dd39e;
+  --red:#ff6464;
+  --border:#292d35;
 }
 
-body {
-    margin: 0;
-    background: #101010;
-    color: #fff;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
-.container {
-    max-width: 600px;
-    margin: auto;
-    padding: 16px;
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
 }
 
-h1 {
-    font-size: 28px;
-    margin: 5px 0 4px;
+button,
+input,
+select{
+  font:inherit;
 }
 
-.subtitle {
-    color: #999;
-    font-size: 14px;
-    margin-bottom: 18px;
+.app{
+  width:100%;
+  max-width:700px;
+  margin:auto;
+  padding:14px 14px 40px;
 }
 
-.card {
-    background: #1b1b1b;
-    border-radius: 18px;
-    padding: 18px;
-    margin-bottom: 14px;
-    border: 1px solid #292929;
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
 }
 
-.artist {
-    color: #ffb300;
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 5px;
+.logo{
+  font-size:22px;
+  font-weight:800;
 }
 
-.song-title {
-    font-size: 25px;
-    font-weight: 800;
-    line-height: 1.15;
-    margin-bottom: 12px;
+.subtitle{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:2px;
 }
 
-.tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin-bottom: 15px;
+.iconBtn{
+  width:42px;
+  height:42px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:white;
+  border-radius:14px;
+  font-size:20px;
 }
 
-.tag {
-    background: #292929;
-    color: #ccc;
-    padding: 6px 9px;
-    border-radius: 9px;
-    font-size: 12px;
+.search{
+  width:100%;
+  padding:13px 15px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  color:white;
+  outline:none;
+  margin-bottom:10px;
 }
 
-.tag.easy {
-    color: #7cff9b;
+.search::placeholder{
+  color:#737985;
 }
 
-.tag.medium {
-    color: #ffd166;
+.filters{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:10px;
 }
 
-.tag.hard {
-    color: #ff7777;
+select{
+  width:100%;
+  padding:11px 12px;
+  background:var(--card);
+  color:white;
+  border:1px solid var(--border);
+  border-radius:12px;
+  outline:none;
 }
 
-.section-title {
-    color: #aaa;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: .7px;
-    margin: 15px 0 7px;
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:12px;
 }
 
-.chords {
-    font-size: 21px;
-    font-weight: 700;
-    line-height: 1.5;
-    color: #fff;
-    word-break: break-word;
+.btn{
+  border:0;
+  border-radius:14px;
+  padding:13px 10px;
+  font-weight:700;
+  color:#111;
+  background:var(--accent);
 }
 
-.extra {
-    color: #aaa;
-    font-size: 14px;
-    line-height: 1.45;
+.btn.secondary{
+  background:var(--card2);
+  color:white;
+  border:1px solid var(--border);
 }
 
-button {
-    border: 0;
-    border-radius: 15px;
-    padding: 14px 16px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
+.btn:active,
+.iconBtn:active{
+  transform:scale(.98);
 }
 
-.main-button {
-    width: 100%;
-    background: #ffb300;
-    color: #111;
-    font-size: 18px;
-    margin-bottom: 10px;
+.song{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
 }
 
-.secondary {
-    background: #292929;
-    color: #fff;
+.songTop{
+  padding:17px 17px 13px;
+  border-bottom:1px solid var(--border);
 }
 
-.button-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+.artist{
+  color:var(--accent);
+  font-size:14px;
+  font-weight:700;
+  margin-bottom:3px;
 }
 
-.filters {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+.title{
+  font-size:25px;
+  line-height:1.15;
+  font-weight:800;
+  padding-right:42px;
 }
 
-select {
-    width: 100%;
-    background: #202020;
-    color: #fff;
-    border: 1px solid #333;
-    border-radius: 12px;
-    padding: 12px;
-    font-size: 14px;
+.songMeta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:12px;
 }
 
-.moods {
-    display: flex;
-    gap: 7px;
-    overflow-x: auto;
-    padding-bottom: 3px;
+.badge{
+  background:var(--card2);
+  border:1px solid var(--border);
+  color:#d9dce2;
+  border-radius:9px;
+  padding:5px 8px;
+  font-size:11px;
 }
 
-.mood {
-    flex: 0 0 auto;
-    padding: 9px 12px;
-    border-radius: 12px;
-    background: #252525;
-    color: #ccc;
-    font-size: 13px;
+.badge.good{
+  color:var(--green);
 }
 
-.mood.active {
-    background: #ffb300;
-    color: #111;
+.badge.warn{
+  color:#ffc75b;
 }
 
-.favorite {
-    font-size: 25px;
-    float: right;
-    cursor: pointer;
+.favorite{
+  position:absolute;
+  right:16px;
+  top:16px;
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:var(--card2);
+  color:white;
+  font-size:21px;
 }
 
-.info-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 9px;
+.songTop{
+  position:relative;
 }
 
-.info {
-    background: #222;
-    border-radius: 12px;
-    padding: 11px;
+.chordBlock{
+  padding:15px 17px;
+  background:#121419;
 }
 
-.info-label {
-    color: #888;
-    font-size: 11px;
-    margin-bottom: 3px;
+.mainLabel{
+  color:var(--muted);
+  text-transform:uppercase;
+  font-size:10px;
+  letter-spacing:.08em;
+  margin-bottom:7px;
 }
 
-.info-value {
-    font-size: 14px;
-    font-weight: 700;
+.mainChords{
+  font-size:21px;
+  font-weight:800;
+  letter-spacing:.03em;
+  color:#fff;
+  line-height:1.5;
 }
 
-.notice {
-    padding: 11px;
-    background: #302916;
-    color: #ffd166;
-    border-radius: 11px;
-    font-size: 13px;
-    line-height: 1.4;
+.section{
+  padding:16px 17px;
+  border-top:1px solid var(--border);
 }
 
-.verified {
-    padding: 10px;
-    background: #18271d;
-    color: #8dffab;
-    border-radius: 11px;
-    font-size: 13px;
+.sectionTitle{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+  font-weight:800;
+  font-size:15px;
 }
 
-.set-list {
-    margin-top: 10px;
+.line{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px;
+  align-items:center;
+  padding:9px 0;
+  border-bottom:1px solid #22252c;
 }
 
-.set-item {
-    padding: 10px 0;
-    border-bottom: 1px solid #292929;
+.line:last-child{
+  border-bottom:0;
 }
 
-.set-item:last-child {
-    border-bottom: 0;
+.cue{
+  color:#d7d9de;
+  font-size:13px;
+  line-height:1.35;
 }
 
-.small {
-    color: #777;
-    font-size: 12px;
+.chords{
+  color:var(--accent);
+  font-weight:800;
+  font-size:15px;
+  white-space:nowrap;
 }
 
-.footer {
-    text-align: center;
-    color: #666;
-    font-size: 12px;
-    padding: 12px 0 25px;
+.note{
+  margin:14px 17px;
+  padding:12px;
+  background:#211e17;
+  border:1px solid #453a23;
+  border-radius:12px;
+  color:#d8c69c;
+  font-size:12px;
+  line-height:1.45;
+}
+
+.note.good{
+  background:#16231e;
+  border-color:#284f40;
+  color:#9be0bf;
+}
+
+.unverified{
+  margin:15px 17px;
+  padding:13px;
+  border-radius:13px;
+  background:#241b18;
+  border:1px solid #49302a;
+  color:#d8aaa0;
+  font-size:12px;
+  line-height:1.45;
+}
+
+.empty{
+  padding:35px 15px;
+  text-align:center;
+  color:var(--muted);
+}
+
+.bottom{
+  margin-top:13px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.toggle{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 14px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:13px;
+  color:#ddd;
+  font-size:12px;
+}
+
+.toggle input{
+  width:18px;
+  height:18px;
+}
+
+.set{
+  margin-top:12px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:15px;
+}
+
+.set h3{
+  margin:0 0 10px;
+}
+
+.setItem{
+  padding:8px 0;
+  border-bottom:1px solid var(--border);
+  font-size:13px;
+}
+
+.setItem:last-child{
+  border-bottom:0;
+}
+
+.footer{
+  text-align:center;
+  color:#5f646f;
+  font-size:10px;
+  margin-top:20px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
-    <h1>🎸 Случайная песня</h1>
-    <div class="subtitle">
-        Русский рок для гитары · 120 песен
+  <div class="header">
+    <div>
+      <div class="logo">🎸 Случайная песня</div>
+      <div class="subtitle">Русский рок для гитары</div>
     </div>
 
-    <div class="card" id="songCard">
-        <div class="artist" id="artist"></div>
+    <button class="iconBtn" onclick="showFavorites()">♥</button>
+  </div>
 
-        <span class="favorite" id="favorite" onclick="toggleFavorite()">♡</span>
+  <input
+    id="search"
+    class="search"
+    placeholder="🔎 Найти песню или исполнителя..."
+    oninput="renderList()"
+  >
 
-        <div class="song-title" id="title"></div>
+  <div class="filters">
+    <select id="artistFilter" onchange="renderList()">
+      <option value="">Все исполнители</option>
+    </select>
 
-        <div class="tags">
-            <span class="tag" id="difficulty"></span>
-            <span class="tag" id="moodTag"></span>
-            <span class="tag" id="verifiedTag"></span>
-        </div>
+    <select id="difficultyFilter" onchange="renderList()">
+      <option value="">Любая сложность</option>
+      <option value="1">⭐ Легко</option>
+      <option value="2">⭐⭐ Средне</option>
+      <option value="3">⭐⭐⭐ Сложно</option>
+    </select>
+  </div>
 
-        <div class="section-title">Основные аккорды</div>
-        <div class="chords" id="chords"></div>
-
-        <div id="verification"></div>
-
-        <div class="section-title">Как играть</div>
-        <div class="info-grid">
-
-            <div class="info">
-                <div class="info-label">БОЙ</div>
-                <div class="info-value" id="beat"></div>
-            </div>
-
-            <div class="info">
-                <div class="info-label">ТЕМП</div>
-                <div class="info-value" id="bpm"></div>
-            </div>
-
-            <div class="info">
-                <div class="info-label">КАПО</div>
-                <div class="info-value" id="capo"></div>
-            </div>
-
-            <div class="info">
-                <div class="info-label">НАСТРОЕНИЕ</div>
-                <div class="info-value" id="mood"></div>
-            </div>
-
-        </div>
-
-        <div class="section-title">Примечание</div>
-        <div class="extra" id="note"></div>
-    </div>
-
-    <button class="main-button" onclick="randomSong()">
-        🎲 Случайная песня
+  <div class="actions">
+    <button class="btn" onclick="randomSong()">
+      🎲 Случайная
     </button>
 
-    <div class="button-row">
-        <button class="secondary" onclick="makeSet()">
-            🎤 Сет на 30 минут
-        </button>
+    <button class="btn secondary" onclick="makeSet()">
+      🎤 Сет 30 минут
+    </button>
+  </div>
 
-        <button class="secondary" onclick="showFavorites()">
-            ⭐ Избранное
-        </button>
-    </div>
+  <div class="bottom">
+    <label class="toggle">
+      <span>✓ Только проверенные</span>
+      <input id="verifiedOnly" type="checkbox" checked onchange="renderList()">
+    </label>
 
-    <div class="card">
+    <label class="toggle">
+      <span>🎵 Только аккорды</span>
+      <input id="chordsOnly" type="checkbox" onchange="renderCurrent()">
+    </label>
+  </div>
 
-        <div class="section-title">Сложность</div>
+  <div id="content"></div>
 
-        <div class="filters">
-            <select id="difficultyFilter" onchange="applyFilters()">
-                <option value="all">Любая</option>
-                <option value="1">⭐ Очень легко</option>
-                <option value="2">⭐⭐ Легко</option>
-                <option value="3">⭐⭐⭐ Средне</option>
-                <option value="4">⭐⭐⭐⭐ Сложно</option>
-                <option value="5">⭐⭐⭐⭐⭐ Очень сложно</option>
-            </select>
-
-            <select id="artistFilter" onchange="applyFilters()">
-                <option value="all">Все исполнители</option>
-            </select>
-        </div>
-
-        <div class="section-title">Настроение</div>
-
-        <div class="moods">
-            <div class="mood active" data-mood="all" onclick="setMood('all', this)">
-                Все
-            </div>
-            <div class="mood" data-mood="романтика" onclick="setMood('романтика', this)">
-                ❤️ Романтика
-            </div>
-            <div class="mood" data-mood="грусть" onclick="setMood('грусть', this)">
-                🌧 Грусть
-            </div>
-            <div class="mood" data-mood="драйв" onclick="setMood('драйв', this)">
-                🔥 Драйв
-            </div>
-            <div class="mood" data-mood="ностальгия" onclick="setMood('ностальгия', this)">
-                🕰 Ностальгия
-            </div>
-            <div class="mood" data-mood="душевное" onclick="setMood('душевное', this)">
-                🍺 Душевное
-            </div>
-        </div>
-
-    </div>
-
-    <div id="setCard"></div>
-
-    <div class="footer">
-        🎸 Внутри лампового комбика
-    </div>
+  <div class="footer">
+    🎸 120 песен · версия 1.0
+  </div>
 
 </div>
-
 
 <script>
 
 /* =========================================================
    БАЗА ПЕСЕН
-   verified = true  → последовательность проверена
-   verified = false → песня есть, но аккорды пока не считаются
-                         окончательно подтверждёнными
-========================================================= */
+   verified:true — схема аккордов подтверждена.
+   verified:false — песня есть в каталоге, но аккорды
+   намеренно не подставляются, чтобы не выдавать догадки
+   за правильную аппликатуру.
+   ========================================================= */
 
 const songs = [
 
 /* ================= КИНО ================= */
 
 {
-artist:"Кино",
-title:"Пачка сигарет",
-chords:"Am · C · D7 · Em",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:88,
-capo:"—",
-mood:"ностальгия",
-verified:true,
-note:"Удобный вариант для акустической гитары."
+ a:"Кино", t:"Пачка сигарет", d:1, bpm:88, beat:"↓↑↓↑",
+ verified:true,
+ chords:"Am · C · D7 · Em",
+ intro:"Вступление",
+ verse:"Куплет",
+ chorus:"Припев"
 },
 
 {
-artist:"Кино",
-title:"Звезда по имени Солнце",
-chords:"Am · C · Dm · G",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:90,
-capo:"—",
-mood:"ностальгия",
-verified:true,
-note:"Упрощённый гитарный вариант."
+ a:"Кино", t:"Звезда по имени Солнце", d:1, bpm:90, beat:"↓↑↓↑",
+ verified:true,
+ chords:"Am · C · Dm · G",
+ intro:"Вступление: Am · C · Dm · G",
+ verse:"Куплет: Am · C · Dm · G",
+ chorus:"Припев: Am · C · Dm · G"
 },
 
 {
-artist:"Кино",
-title:"Группа крови",
-chords:"F#m · C#m · F#m · E / F#m · C#m · Bm · E",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:90,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Основная гармоническая схема проверена."
+ a:"Кино", t:"Группа крови", d:2, bpm:92, beat:"↓↑↓↑",
+ verified:true,
+ chords:"F#m · C#m · Bm · E",
+ intro:"Вступление: F#m · C#m",
+ verse:"Куплет: F#m · C#m · F#m · E",
+ chorus:"Припев: F#m · C#m · Bm · E"
 },
 
 {
-artist:"Кино",
-title:"Перемен",
-chords:"F#m · Bm · G# · A · E",
-difficulty:3,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:105,
-capo:"—",
-mood:"драйв",
-verified:false,
-note:"В разных гитарных разборах встречаются варианты гармонии. Не выдаём упрощённую схему за оригинал."
+ a:"Кино", t:"Перемен", d:3, bpm:96, beat:"↓↑↓↑",
+ verified:false
 },
 
 {
-artist:"Кино",
-title:"Когда твоя девушка больна",
-chords:"G · Em · C · D",
-difficulty:1,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:100,
-capo:"—",
-mood:"романтика",
-verified:true,
-note:"Очень удобный вариант для начинающего."
+ a:"Кино", t:"Когда твоя девушка больна", d:1, bpm:92, beat:"↓↑↓↑",
+ verified:true,
+ chords:"G · Em · C · D",
+ intro:"Вступление: G · Em · C · D",
+ verse:"Куплет: G · Em · C · D",
+ chorus:"Припев: G · Em · C · D"
 },
 
 {
-artist:"Кино",
-title:"Спокойная ночь",
-chords:"Am · G · Dm · C · F · Em",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:80,
-capo:"—",
-mood:"грусть",
-verified:true,
-note:"Мрачная, спокойная песня."
+ a:"Кино", t:"Спокойная ночь", d:2, bpm:82, beat:"↓↑↓↑",
+ verified:true,
+ chords:"Am · G · Dm · C · F · Em",
+ intro:"Вступление: Am · G · Dm · C",
+ verse:"Куплет: Am · G · Dm · C · F · Em",
+ chorus:"Припев: Am · G · Dm · C"
 },
 
 {
-artist:"Кино",
-title:"Кукушка",
-chords:"Am · C · G · Dm · F",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:75,
-capo:"—",
-mood:"грусть",
-verified:true,
-note:"Вступление: Am–C–G–G. Куплет: Am–G–Dm–Am. Припев: G–F–Am."
+ a:"Кино", t:"Кукушка", d:2, bpm:86, beat:"↓↑↓↑",
+ verified:true,
+ chords:"Am · C · G · Dm · F",
+ intro:"Am · C · G · G",
+ verse:"Куплет: Am · G · Dm · Am",
+ chorus:"Припев: G · F · Am"
 },
 
 {
-artist:"Кино",
-title:"Восьмиклассница",
-chords:"Am · C · Dm · E",
-difficulty:1,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:120,
-capo:"—",
-mood:"романтика",
-verified:false,
-note:"Аккордовая схема требует дополнительной проверки."
+ a:"Кино", t:"Восьмиклассница", d:1, bpm:100,
+ verified:false
 },
 
 {
-artist:"Кино",
-title:"Алюминиевые огурцы",
-chords:"Am · C · Dm · E",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:120,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Полный гитарный разбор найден."
+ a:"Кино", t:"Алюминиевые огурцы", d:2,
+ verified:false
 },
 
 {
-artist:"Кино",
-title:"Мама, мы все сошли с ума",
-chords:"Hm · A · G",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑",
-bpm:95,
-capo:"—",
-mood:"грусть",
-verified:false,
-note:"Упрощённая схема; оригинальную гармонию не считаем окончательно проверенной."
+ a:"Кино", t:"Мама, мы все сошли с ума", d:2,
+ verified:false
 },
 
 /* ================= ДДТ ================= */
 
 {
-artist:"ДДТ",
-title:"Что такое осень",
-chords:"Am · E · A7 · Dm · F",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:80,
-capo:"—",
-mood:"грусть",
-verified:true,
-note:"Классический акустический вариант."
+ a:"ДДТ", t:"Что такое осень", d:1, bpm:80,
+ verified:true,
+ chords:"Am · E · A7 · Dm · F",
+ intro:"Вступление",
+ verse:"Куплет: Am · E · A7 · Dm · F",
+ chorus:"Припев: Am · E · A7 · Dm"
 },
 
 {
-artist:"ДДТ",
-title:"Это всё",
-chords:"G · D/F# · C · Am · D",
-difficulty:3,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:82,
-capo:"—",
-mood:"грусть",
-verified:true,
-note:"Встречаются басовые обращения."
+ a:"ДДТ", t:"Это всё", d:2,
+ verified:true,
+ chords:"G · D/F# · C · Am · D",
+ intro:"Вступление",
+ verse:"Куплет: G · D/F# · C · Am · D",
+ chorus:"Припев: G · D/F# · C · Am"
 },
 
 {
-artist:"ДДТ",
-title:"Просвистела",
-chords:"Em · Cadd9 · G · B7",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:110,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Cadd9 можно заменить обычным C."
+ a:"ДДТ", t:"Просвистела", d:2, bpm:110,
+ beat:"↓↓↑↑↓↑",
+ verified:true,
+ chords:"Em · Cadd9 · G · B7",
+ intro:"Вступление",
+ verse:"Куплет: Em · Cadd9 · G · B7",
+ chorus:"Припев: Em · Cadd9 · G · B7"
 },
 
 {
-artist:"ДДТ",
-title:"Родина",
-chords:"Am · C · G · F",
-difficulty:3,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:90,
-capo:"—",
-mood:"душевное",
-verified:false,
-note:"Схема требует дополнительной проверки."
+ a:"ДДТ", t:"Родина", d:2,
+ verified:false
 },
 
 {
-artist:"ДДТ",
-title:"Метель",
-chords:"Em · C · G · D",
-difficulty:1,
-beat:"↓ ↑ ↓ ↑",
-bpm:85,
-capo:"—",
-mood:"грусть",
-verified:true,
-note:"Вступление Em–C–G–Dsus2."
+ a:"ДДТ", t:"Метель", d:1,
+ verified:true,
+ chords:"Em · C · G · D",
+ intro:"Em · C · G · Dsus2 ×2",
+ verse:"Куплет: Em · C · G · D",
+ chorus:"Припев: Em · C · G · D"
 },
 
 {
-artist:"ДДТ",
-title:"Я получил эту роль",
-chords:"Am · C · G · Dm",
-difficulty:3,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:85,
-capo:"—",
-mood:"грусть",
-verified:false,
-note:"Не считаем эту схему окончательно подтверждённой."
+ a:"ДДТ", t:"Я получил эту роль", d:2,
+ verified:false
 },
 
 {
-artist:"ДДТ",
-title:"Актриса-весна",
-chords:"Am · F · C · G",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:105,
-capo:"—",
-mood:"романтика",
-verified:false,
-note:"Требует дополнительной проверки."
+ a:"ДДТ", t:"Актриса-весна", d:2,
+ verified:false
 },
 
 {
-artist:"ДДТ",
-title:"Мама это рок-н-ролл",
-chords:"Am · C · G · F",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑",
-bpm:115,
-capo:"—",
-mood:"драйв",
-verified:false,
-note:"Схема упрощённая."
+ a:"ДДТ", t:"Мама это рок-н-ролл", d:2,
+ verified:false
 },
 
 {
-artist:"ДДТ",
-title:"Осень",
-chords:"Am · C · G · F",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:80,
-capo:"—",
-mood:"грусть",
-verified:false,
-note:"Нужна дополнительная сверка."
+ a:"ДДТ", t:"Осень", d:2,
+ verified:false
 },
 
 {
-artist:"ДДТ",
-title:"Не стреляй",
-chords:"D · Em · Em7 · G · A / B · Em · G · A",
-difficulty:3,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:80,
-capo:"—",
-mood:"грусть",
-verified:true,
-note:"Основная схема куплетов подтверждена."
+ a:"ДДТ", t:"Не стреляй", d:2,
+ verified:true,
+ chords:"D · Em · Em7 · G · A",
+ intro:"Вступление",
+ verse:"Куплет: D · Em · Em7 · G · A",
+ chorus:"Припев: B · Em · Em7 · G · A"
 },
 
 /* ================= СПЛИН ================= */
 
 {
-artist:"Сплин",
-title:"Выхода нет",
-chords:"C · G · D · Em",
-difficulty:1,
-beat:"↓ ↑ ↓ ↓ ↓ ↑",
-bpm:105,
-capo:"—",
-mood:"ностальгия",
-verified:true,
-note:"Очень удобная песня для акустики."
+ a:"Сплин", t:"Выхода нет", d:1, bpm:90,
+ beat:"↓↑↓↓↓↑",
+ verified:true,
+ chords:"C · G · D · Em",
+ intro:"Вступление",
+ verse:"Куплет: C · G · D · Em",
+ chorus:"Припев: Em · C · G · D"
 },
 
 {
-artist:"Сплин",
-title:"Романс",
-chords:"A7 · Dm · A7 · Dm / Gm · F · Gm · A7 · Dm",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:75,
-capo:"—",
-mood:"романтика",
-verified:true,
-note:"Аккордовая последовательность проверена."
+ a:"Сплин", t:"Романс", d:2,
+ verified:true,
+ chords:"A7 · Dm · Gm · F",
+ intro:"Вступление",
+ verse:"Куплет: A7 · Dm",
+ chorus:"Припев: Gm · F · Gm · A7 · Dm"
 },
 
 {
-artist:"Сплин",
-title:"Моё сердце",
-chords:"D · G · A · Bm",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:105,
-capo:"—",
-mood:"романтика",
-verified:false,
-note:"Базовая схема, требует дополнительной сверки."
+ a:"Сплин", t:"Моё сердце", d:1,
+ verified:false
 },
 
 {
-artist:"Сплин",
-title:"Линия жизни",
-chords:"Am · C · G · F",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:90,
-capo:"—",
-mood:"грусть",
-verified:false,
-note:"Упрощённый вариант."
+ a:"Сплин", t:"Линия жизни", d:2,
+ verified:false
 },
 
 {
-artist:"Сплин",
-title:"Орбит без сахара",
-chords:"Am · C · G · F",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:120,
-capo:"—",
-mood:"драйв",
-verified:false,
-note:"Полный разбор требует дополнительной сверки."
+ a:"Сплин", t:"Орбит без сахара", d:2,
+ verified:false
 },
 
 {
-artist:"Сплин",
-title:"Прочь из моей головы",
-chords:"Cm · Hdim7 · G#m7♭5 · Fm · D# · C#m5-",
-difficulty:5,
-beat:"↓ ↑ ↓ ↑",
-bpm:90,
-capo:"—",
-mood:"грусть",
-verified:true,
-note:"Оригинальная гармония заметно сложнее стандартного упрощённого варианта."
+ a:"Сплин", t:"Прочь из моей головы", d:3,
+ verified:true,
+ chords:"Cm · Hdim7 · G#m75- · Fm · D# · C#m5-",
+ intro:"Вступление: Cm · Hdim7 · G#m75- · Fm · D# · C#m5-",
+ verse:"Куплет",
+ chorus:"Припев"
 },
 
 {
-artist:"Сплин",
-title:"Бог устал нас любить",
-chords:"Am · F · C · G",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:90,
-capo:"—",
-mood:"грусть",
-verified:false,
-note:"Требует проверки."
+ a:"Сплин", t:"Бог устал нас любить", d:2,
+ verified:false
 },
 
 {
-artist:"Сплин",
-title:"Новые люди",
-chords:"Am · Asus2 · Asus4 · C · Dm · G",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:95,
-capo:"—",
-mood:"грусть",
-verified:false,
-note:"Расширенная схема требует сверки."
+ a:"Сплин", t:"Новые люди", d:2,
+ verified:false
 },
 
 {
-artist:"Сплин",
-title:"Моя любовь",
-chords:"Am · F · C · G",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:90,
-capo:"—",
-mood:"романтика",
-verified:false,
-note:"Упрощённый вариант."
+ a:"Сплин", t:"Моя любовь", d:2,
+ verified:false
 },
 
 {
-artist:"Сплин",
-title:"Остаёмся зимовать",
-chords:"F · C · Dm · Bb · G · Am · D",
-difficulty:3,
-beat:"↓ ↓ ↑ ↑",
-bpm:80,
-capo:"—",
-mood:"грусть",
-verified:false,
-note:"В источниках встречается несколько вариантов записи."
+ a:"Сплин", t:"Остаёмся зимовать", d:2,
+ verified:false
 },
 
 /* ================= НАУТИЛУС ================= */
 
 {
-artist:"Наутилус Помпилиус",
-title:"Гудбай, Америка",
-chords:"C · F · G · E7 · Am · Dm",
-difficulty:3,
-beat:"↓ ↓ ↑ ↑",
-bpm:90,
-capo:"—",
-mood:"ностальгия",
-verified:false,
-note:"Нужна дополнительная сверка."
+ a:"Наутилус Помпилиус", t:"Гудбай, Америка", d:2,
+ verified:false
 },
 
 {
-artist:"Наутилус Помпилиус",
-title:"Я хочу быть с тобой",
-chords:"Am · G7 · C · E7 · F",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:80,
-capo:"—",
-mood:"романтика",
-verified:false,
-note:"Базовая схема."
+ a:"Наутилус Помпилиус", t:"Я хочу быть с тобой", d:2,
+ verified:false
 },
 
 {
-artist:"Наутилус Помпилиус",
-title:"Крылья",
-chords:"Em · B7 · Am",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑",
-bpm:80,
-capo:"—",
-mood:"грусть",
-verified:false,
-note:"Упрощённая схема."
+ a:"Наутилус Помпилиус", t:"Крылья", d:1,
+ verified:false
 },
 
 {
-artist:"Наутилус Помпилиус",
-title:"Прогулки по воде",
-chords:"Em · B7 · Am · G · D · C",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:90,
-capo:"—",
-mood:"душевное",
-verified:false,
-note:"Встречается транспонированный вариант G–D–Am–Em."
+ a:"Наутилус Помпилиус", t:"Прогулки по воде", d:2,
+ verified:false
 },
 
 {
-artist:"Наутилус Помпилиус",
-title:"Скованные одной цепью",
-chords:"Bm · G · F#m",
-difficulty:3,
-beat:"↓ — ↓× ↑↓ — ↑↓×",
-bpm:90,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Для более тяжёлого звучания можно использовать power chords."
+ a:"Наутилус Помпилиус", t:"Скованные одной цепью", d:2,
+ verified:true,
+ chords:"Bm · G · F#m",
+ intro:"Вступление",
+ verse:"Куплет: Bm · G · F#m",
+ chorus:"Припев: Bm · G · F#m"
 },
 
 {
-artist:"Наутилус Помпилиус",
-title:"Тутанхамон",
-chords:"D · Dsus4 · Dsus2 · A · Bm · Em",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:95,
-capo:"—",
-mood:"ностальгия",
-verified:true,
-note:"Припев: D–A–Bm–Em–D–A."
+ a:"Наутилус Помпилиус", t:"Тутанхамон", d:2,
+ verified:true,
+ chords:"D · Dsus4 · Dsus2 · A · Bm · Em",
+ intro:"D · Dsus4 · Dsus2 · A",
+ verse:"Куплет: D · A · Bm · Em",
+ chorus:"Припев: D · A · Bm · Em · D · A"
 },
 
 {
-artist:"Наутилус Помпилиус",
-title:"Дыхание",
-chords:"Bm · A · G · D · F# · Em",
-difficulty:3,
-beat:"↓ ↓ ↑ ↑",
-bpm:75,
-capo:"—",
-mood:"романтика",
-verified:false,
-note:"Базовая схема требует дополнительной проверки."
+ a:"Наутилус Помпилиус", t:"Дыхание", d:2,
+ verified:false
 },
 
 {
-artist:"Наутилус Помпилиус",
-title:"Шар цвета хаки",
-chords:"Am · E7 / F · Am · F · Am · E7",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:100,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Куплет Am–E7. Припев F–Am–F–Am–E7."
+ a:"Наутилус Помпилиус", t:"Шар цвета хаки", d:1,
+ verified:true,
+ chords:"Am · E7 · F",
+ intro:"Am · E7",
+ verse:"Куплет: Am · E7",
+ chorus:"Припев: F · Am · F · Am · E7"
 },
 
 /* ================= ЧАЙФ ================= */
 
 {
-artist:"Чайф",
-title:"Аргентина — Ямайка 5:0",
-chords:"F#m · Bm · A · E",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:110,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Оригинальная тональность F#m."
+ a:"Чайф", t:"Аргентина — Ямайка 5:0", d:1,
+ verified:true,
+ chords:"F#m · Bm · A · E",
+ intro:"Вступление",
+ verse:"Куплет: F#m · Bm · A · E",
+ chorus:"Припев: F#m · Bm · A · E"
 },
 
 {
-artist:"Чайф",
-title:"Ой-йо",
-chords:"C · G · Am · F · C · G · Am · F · G",
-difficulty:1,
-beat:"↓ ↑ ↓ ↑",
-bpm:115,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Одна из самых удобных песен для компании."
+ a:"Чайф", t:"Ой-йо", d:1, beat:"↓↑↓↑",
+ verified:true,
+ chords:"C · G · Am · F",
+ intro:"C · G · Am · F · G",
+ verse:"Куплет: C · G · Am · F",
+ chorus:"Припев: C · G · Am · F · G"
 },
 
 {
-artist:"Чайф",
-title:"Никто не услышит",
-chords:"C · G · Am · F",
-difficulty:1,
-beat:"↓ ↑ ↓ ↑",
-bpm:110,
-capo:"—",
-mood:"драйв",
-verified:false,
-note:"Упрощённая схема."
+ a:"Чайф", t:"Никто не услышит", d:1,
+ verified:false
 },
 
 {
-artist:"Чайф",
-title:"17 лет",
-chords:"Am · F · G · C",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:105,
-capo:"—",
-mood:"романтика",
-verified:false,
-note:"Требует дополнительной проверки."
+ a:"Чайф", t:"17 лет", d:1,
+ verified:false
 },
 
 {
-artist:"Чайф",
-title:"Не спеши",
-chords:"Em · G · D · Em / C · G · B · Em",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑",
-bpm:90,
-capo:"—",
-mood:"душевное",
-verified:true,
-note:"Вступление подтверждено."
+ a:"Чайф", t:"Не спеши", d:2,
+ verified:true,
+ chords:"Em · G · D · C · B",
+ intro:"Em · G · D · Em ×2",
+ verse:"Куплет: Em · G · D · Em",
+ chorus:"Припев: G · D · G · C"
 },
 
 {
-artist:"Чайф",
-title:"Оранжевое настроение",
-chords:"C · Am · Dm · G",
-difficulty:1,
-beat:"↓ ↑ ↓ ↑",
-bpm:115,
-capo:"—",
-mood:"душевное",
-verified:true,
-note:"Простой вариант."
+ a:"Чайф", t:"Оранжевое настроение", d:1,
+ verified:true,
+ chords:"C · Am · Dm · G",
+ intro:"Вступление",
+ verse:"Куплет: C · Am · Dm · G",
+ chorus:"Припев: C · Am · Dm · G"
 },
 
 {
-artist:"Чайф",
-title:"В её глазах",
-chords:"Am · Em · F · G",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:95,
-capo:"—",
-mood:"романтика",
-verified:true,
-note:"Вступление Am–Em."
+ a:"Чайф", t:"В её глазах", d:1,
+ verified:true,
+ chords:"Am · Em · F · G",
+ intro:"Вступление",
+ verse:"Куплет: Am · Em · F · G",
+ chorus:"Припев: Am · Em · F · G"
 },
 
 /* ================= АГАТА КРИСТИ ================= */
 
 {
-artist:"Агата Кристи",
-title:"Как на войне",
-chords:"Am · G · C · E",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:100,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Один из лучших вариантов для гитарного сета."
+ a:"Агата Кристи", t:"Как на войне", d:1,
+ beat:"↓↑↑↓↑",
+ verified:true,
+ chords:"Am · G · C · E",
+ intro:"Вступление",
+ verse:"Куплет: Am · G · C · E",
+ chorus:"Припев: Am · G · C · E"
 },
 
 {
-artist:"Агата Кристи",
-title:"Опиум для никого",
-chords:"Cm · Bb · G · Fm · G",
-difficulty:3,
-beat:"↓ ↓ ↑ ↑",
-bpm:95,
-capo:"—",
-mood:"грусть",
-verified:true,
-note:"Основная гармония подтверждена."
+ a:"Агата Кристи", t:"Опиум для никого", d:2,
+ verified:true,
+ chords:"Cm · Bb · G · Fm · G",
+ intro:"Вступление",
+ verse:"Куплет: Cm · Bb · G",
+ chorus:"Припев: Fm · G · Cm"
 },
 
 {
-artist:"Агата Кристи",
-title:"Сказочная тайга",
-chords:"Dm · Gm · A · F / Dm · E7 · A · Dm",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:100,
-capo:"—",
-mood:"ностальгия",
-verified:true,
-note:"В конце есть модуляция в Em."
+ a:"Агата Кристи", t:"Сказочная тайга", d:2,
+ verified:true,
+ chords:"Dm · Gm · A · F",
+ intro:"Dm · Gm · A · F · Dm · G · A · Dm",
+ verse:"Куплет: Dm · E7 · A · Dm",
+ chorus:"Припев: Dm · Gm · A · F · Dm · G · A"
 },
 
 {
-artist:"Агата Кристи",
-title:"Ковёр-вертолёт",
-chords:"E · Am · Dm · C · E · Am · C · E",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:110,
-capo:"3",
-mood:"драйв",
-verified:true,
-note:"Есть вариант с каподастром на 3 ладу."
+ a:"Агата Кристи", t:"Ковёр-вертолёт", d:3,
+ verified:true,
+ chords:"E · Am · Dm · C",
+ intro:"Вступление: E · Am · Dm · C",
+ verse:"Куплет: E · Am · C · E",
+ chorus:"Припев: Am · Dm · C · E"
 },
 
 {
-artist:"Агата Кристи",
-title:"Чёрная луна",
-chords:"Cm · D · Gm · G",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:111,
-capo:"—",
-mood:"грусть",
-verified:false,
-note:"В разных источниках встречаются разные тональности."
+ a:"Агата Кристи", t:"Чёрная луна", d:2,
+ verified:false
 },
 
 {
-artist:"Агата Кристи",
-title:"Я на тебе как на войне",
-chords:"Am · G · C · E",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:100,
-capo:"—",
-mood:"драйв",
-verified:false,
-note:"Упрощённая схема; требует окончательной сверки."
+ a:"Агата Кристи", t:"Я на тебе как на войне", d:1,
+ verified:false
 },
 
-/* ================= КОРОЛЬ И ШУТ ================= */
+/* ================= КИШ ================= */
 
 {
-artist:"Король и Шут",
-title:"Лесник",
-chords:"Am · F · Dm · G",
-difficulty:1,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:130,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Отличная песня для начинающего."
+ a:"Король и Шут", t:"Лесник", d:1,
+ verified:true,
+ chords:"Am · F · Dm · G",
+ intro:"Вступление",
+ verse:"Куплет: Am · F · Dm · G",
+ chorus:"Припев: Am · F · Dm · G"
 },
 
 {
-artist:"Король и Шут",
-title:"Кукла колдуна",
-chords:"Dm · Gm · A · F · Bb · C · A7",
-difficulty:3,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:145,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"В припеве используется расширенная последовательность."
+ a:"Король и Шут", t:"Кукла колдуна", d:2,
+ verified:true,
+ chords:"Dm · Gm · A · F · Bb · C · A7",
+ intro:"Вступление",
+ verse:"Куплет: Dm · Gm · A · F",
+ chorus:"Припев: Bb · C · A7 · Dm"
 },
 
 {
-artist:"Король и Шут",
-title:"Прыгну со скалы",
-chords:"Am · C · G · F",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:115,
-capo:"—",
-mood:"грусть",
-verified:false,
-note:"Требует дополнительной сверки."
+ a:"Король и Шут", t:"Прыгну со скалы", d:2,
+ verified:false
 },
 
 {
-artist:"Король и Шут",
-title:"Ели мясо мужики",
-chords:"Am · G · Am / G · C / Dm · Am · B7 · E",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑",
-bpm:125,
-capo:"—",
-mood:"душевное",
-verified:true,
-note:"Припев: Am–G–C–Dm–Am–B7–E–Am."
+ a:"Король и Шут", t:"Ели мясо мужики", d:2,
+ verified:true,
+ chords:"Am · G · C · Dm · B7 · E",
+ intro:"Am · G · Am",
+ verse:"Куплет: Am · G · Am · G · C",
+ chorus:"Припев: Am · G · C · Dm · Am · B7 · E · Am"
 },
 
 {
-artist:"Король и Шут",
-title:"Проклятый старый дом",
-chords:"Bm · A · Em · F# / Bm · G · A · F#",
-difficulty:3,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:135,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Основная схема подтверждена."
+ a:"Король и Шут", t:"Проклятый старый дом", d:2,
+ verified:true,
+ chords:"Bm · A · Em · F# · G",
+ intro:"Вступление",
+ verse:"Куплет: Bm · A · Em · F#",
+ chorus:"Припев: Bm · G · A · F#"
 },
 
 {
-artist:"Король и Шут",
-title:"Ведьма и осёл",
-chords:"Am · F · Dm · E",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑",
-bpm:130,
-capo:"—",
-mood:"драйв",
-verified:false,
-note:"Упрощённая схема."
+ a:"Король и Шут", t:"Ведьма и осёл", d:2,
+ verified:false
 },
 
 {
-artist:"Король и Шут",
-title:"Мёртвый анархист",
-chords:"Am · G · F · E",
-difficulty:3,
-beat:"↓ ↓ ↑ ↑",
-bpm:150,
-capo:"—",
-mood:"драйв",
-verified:false,
-note:"Требует дополнительной проверки."
+ a:"Король и Шут", t:"Мёртвый анархист", d:3,
+ verified:false
 },
 
 {
-artist:"Король и Шут",
-title:"Дурак и молния",
-chords:"Am · G · F · E",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑",
-bpm:135,
-capo:"—",
-mood:"драйв",
-verified:false,
-note:"Упрощённый вариант."
+ a:"Король и Шут", t:"Дурак и молния", d:2,
+ verified:true,
+ chords:"A · G# · C#m",
+ intro:"Вступление",
+ verse:"Куплет: A · G# · C#m",
+ chorus:"Припев: A · G# · C#m",
+ bridge:"Проигрыш: B · G#m · A · B"
 },
 
 {
-artist:"Король и Шут",
-title:"Медведь",
-chords:"Am · G · F · E",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑",
-bpm:125,
-capo:"—",
-mood:"душевное",
-verified:false,
-note:"Схема требует сверки."
+ a:"Король и Шут", t:"Медведь", d:2,
+ verified:false
 },
 
 /* ================= СЕКТОР ГАЗА ================= */
 
 {
-artist:"Сектор Газа",
-title:"Лирика",
-chords:"F#m · E · Bm · F#m / A · E · Bm · F#m",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:105,
-capo:"—",
-mood:"романтика",
-verified:true,
-note:"Удобный акустический вариант."
+ a:"Сектор Газа", t:"Лирика", d:1,
+ verified:true,
+ chords:"F#m · E · Bm",
+ intro:"Вступление",
+ verse:"Куплет: F#m · E · Bm · F#m",
+ chorus:"Припев: A · E · Bm · F#m"
 },
 
 {
-artist:"Сектор Газа",
-title:"Пора домой",
-chords:"Am · Dm · C · F · E",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑",
-bpm:120,
-capo:"—",
-mood:"душевное",
-verified:false,
-note:"Упрощённая схема."
+ a:"Сектор Газа", t:"Пора домой", d:2,
+ verified:false
 },
 
 {
-artist:"Сектор Газа",
-title:"Туман",
-chords:"Dm · G · C · F · Dm · E · Am",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:90,
-capo:"—",
-mood:"грусть",
-verified:true,
-note:"Куплет Am–Dm–E–Am."
+ a:"Сектор Газа", t:"Туман", d:2,
+ verified:true,
+ chords:"Am · Dm · E · C · F",
+ intro:"Вступление: Dm · G · C · F · Dm · E · Am",
+ verse:"Куплет: Am · Dm · E · Am",
+ chorus:"Припев: Dm · G · C · F"
 },
 
 {
-artist:"Сектор Газа",
-title:"Демобилизация",
-chords:"Dm · Am · E · Am / A7 · Dm",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:125,
-capo:"—",
-mood:"душевное",
-verified:true,
-note:"Вступление Dm–Am–E–Am."
+ a:"Сектор Газа", t:"Демобилизация", d:1,
+ verified:true,
+ chords:"Dm · Am · E · Am",
+ intro:"Вступление",
+ verse:"Куплет: Am · A7 · Dm · Am",
+ chorus:"Припев: Dm · Am · E · Am"
 },
 
 {
-artist:"Сектор Газа",
-title:"30 лет",
-chords:"Am · Dm · G · C · Am · F · Dm · E",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:115,
-capo:"—",
-mood:"душевное",
-verified:true,
-note:"Вступление и основная схема подтверждены."
+ a:"Сектор Газа", t:"30 лет", d:2,
+ verified:true,
+ chords:"Am · F · Dm · G · C · E",
+ intro:"Am · Dm · G · C · Am · F · Dm · E",
+ verse:"Куплет: Am · F · Dm · G",
+ chorus:"Припев: Am · Dm · G · C"
 },
 
 {
-artist:"Сектор Газа",
-title:"Бомж",
-chords:"Am · Dm · E",
-difficulty:1,
-beat:"↓ ↑ ↓ ↑",
-bpm:115,
-capo:"—",
-mood:"душевное",
-verified:true,
-note:"Очень простой вариант."
+ a:"Сектор Газа", t:"Бомж", d:1,
+ beat:"↓↑↓↑",
+ verified:true,
+ chords:"Am · Dm · E",
+ intro:"Am ×4",
+ verse:"Куплет: Am · Dm · E",
+ chorus:"Припев: Am · Dm · E"
 },
 
 {
-artist:"Сектор Газа",
-title:"Колхозный панк",
-chords:"Am · G · F · E",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑",
-bpm:135,
-capo:"—",
-mood:"драйв",
-verified:false,
-note:"Нужна дополнительная сверка."
+ a:"Сектор Газа", t:"Колхозный панк", d:2,
+ verified:false
 },
 
 {
-artist:"Сектор Газа",
-title:"Life",
-chords:"Am · C · G · F",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:120,
-capo:"—",
-mood:"драйв",
-verified:false,
-note:"Схема пока не считается окончательно проверенной."
+ a:"Сектор Газа", t:"Life", d:2,
+ verified:false
 },
 
 /* ================= БИ-2 ================= */
 
 {
-artist:"Би-2",
-title:"Полковнику никто не пишет",
-chords:"Gm · Eb · Cm7 · D7 · F",
-difficulty:3,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:120,
-capo:"—",
-mood:"грусть",
-verified:false,
-note:"Основная схема известна, но полный разбор требует сверки."
+ a:"Би-2", t:"Полковнику никто не пишет", d:2,
+ verified:false
 },
 
 {
-artist:"Би-2",
-title:"Мой рок-н-ролл",
-chords:"F · Fmaj7 · G · Am",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:85,
-capo:"—",
-mood:"романтика",
-verified:false,
-note:"Базовая схема."
+ a:"Би-2", t:"Мой рок-н-ролл", d:2,
+ verified:false
 },
 
 {
-artist:"Би-2",
-title:"Варвара",
-chords:"Gm · Eb · Cm · F / Gm · Am · B · Cm · D",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:100,
-capo:"—",
-mood:"романтика",
-verified:true,
-note:"Основная схема и переход подтверждены."
+ a:"Би-2", t:"Варвара", d:2,
+ verified:true,
+ chords:"Gm · Eb · Cm · F",
+ intro:"Вступление",
+ verse:"Куплет: Gm · Eb · Cm · F",
+ chorus:"Припев: Gm · Am · B · Cm · D"
 },
 
 {
-artist:"Би-2",
-title:"Серебро",
-chords:"Am · F · Dm · E",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:90,
-capo:"—",
-mood:"романтика",
-verified:false,
-note:"Упрощённый вариант."
+ a:"Би-2", t:"Серебро", d:1,
+ verified:false
 },
 
 {
-artist:"Би-2",
-title:"Никто не придёт",
-chords:"Am · F · G · E / H5 · F#5 · G5 · F#5 / C · Em · C · Am",
-difficulty:4,
-beat:"↓ ↓ ↑ ↑",
-bpm:125,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"В оригинале присутствуют power chords."
+ a:"Би-2", t:"Никто не придёт", d:3,
+ verified:true,
+ chords:"Am · F · G · E",
+ intro:"Вступление",
+ verse:"Куплет: Am · F · G · E",
+ chorus:"Припев: B5 · F#5 · G5 · F#5",
+ bridge:"Переход: C · Em · C · Am"
 },
 
 {
-artist:"Би-2",
-title:"Молитва",
-chords:"A · E · F#m · D",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:80,
-capo:"—",
-mood:"грусть",
-verified:false,
-note:"Базовая схема."
+ a:"Би-2", t:"Молитва", d:1,
+ verified:true,
+ chords:"A · E · F#m · D",
+ intro:"Вступление",
+ verse:"Куплет: A · E · F#m · D",
+ chorus:"Припев: A · E · F#m · D"
 },
 
 {
-artist:"Би-2",
-title:"Забрали в армию",
-chords:"Gm · Dm · Eb · Cm",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑",
-bpm:105,
-capo:"—",
-mood:"грусть",
-verified:true,
-note:"Основная последовательность подтверждена."
+ a:"Би-2", t:"Забрали в армию", d:2,
+ verified:true,
+ chords:"Gm · Dm · Eb · Cm",
+ intro:"Вступление",
+ verse:"Куплет: Gm · Dm · Eb · Cm",
+ chorus:"Припев: Gm · Dm · Eb · Cm"
 },
 
 /* ================= МУМИЙ ТРОЛЛЬ ================= */
 
 {
-artist:"Мумий Тролль",
-title:"Владивосток 2000",
-chords:"Am · Dm7 · C · E7",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:120,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Основная схема подтверждена."
+ a:"Мумий Тролль", t:"Владивосток 2000", d:2,
+ verified:true,
+ chords:"Am · Dm · C · E7",
+ intro:"Am · Dm7 · C · E7",
+ verse:"Куплет: Am · Dm · C · E",
+ chorus:"Припев: Am · Dm7 · C · E7"
 },
 
 {
-artist:"Мумий Тролль",
-title:"Утекай",
-chords:"Bm · E · Em · F# / Bm · D · E · F#",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:125,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Припев Bm–D–E–F#."
+ a:"Мумий Тролль", t:"Утекай", d:2,
+ verified:true,
+ chords:"Bm · E · Em · F#",
+ intro:"Вступление",
+ verse:"Куплет: Bm · E · Em · F#",
+ chorus:"Припев: Bm · D · E · F#"
 },
 
 {
-artist:"Мумий Тролль",
-title:"Медведица",
-chords:"Am · F · C · E",
-difficulty:1,
-beat:"↓ ↑ ↓ ↑",
-bpm:115,
-capo:"—",
-mood:"романтика",
-verified:true,
-note:"Очень простой вариант."
+ a:"Мумий Тролль", t:"Медведица", d:1,
+ verified:true,
+ chords:"Am · F · C · E",
+ intro:"Вступление",
+ verse:"Куплет: Am · F · C · E",
+ chorus:"Припев: Am · F · C · E"
 },
 
 {
-artist:"Мумий Тролль",
-title:"Дельфины",
-chords:"Am · Asus2 · F · Fm / Am · Dm · Em7 · Dm",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:85,
-capo:"—",
-mood:"грусть",
-verified:true,
-note:"В припеве: Dm7–G–C–Am–F–Dm7–G–C–Am–F–E."
+ a:"Мумий Тролль", t:"Дельфины", d:2,
+ verified:true,
+ chords:"Am · Dm · Em7 · F",
+ intro:"Am · Asus2 · F · Fm",
+ verse:"Куплет: Am · Dm · Em7 · Dm",
+ chorus:"Припев: Dm7 · G · C · Am · F"
 },
 
 {
-artist:"Мумий Тролль",
-title:"Невеста",
-chords:"Am · G · Em · Dm / G · Dm · Am · Em · Am",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:95,
-capo:"—",
-mood:"романтика",
-verified:true,
-note:"Основная схема подтверждена."
+ a:"Мумий Тролль", t:"Невеста", d:2,
+ verified:true,
+ chords:"Am · G · Em · Dm",
+ intro:"Вступление",
+ verse:"Куплет: Am · G · Em · Dm",
+ chorus:"Припев: G · Dm · Am · Em · Am"
 },
 
 {
-artist:"Мумий Тролль",
-title:"Это по любви",
-chords:"Gm · Cm · F · Dm · Bb · C · Eb",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:95,
-capo:"—",
-mood:"романтика",
-verified:true,
-note:"Расширенная гармония."
+ a:"Мумий Тролль", t:"Это по любви", d:2,
+ verified:true,
+ chords:"Gm · Cm · F · Dm · Bb · C · Eb",
+ intro:"Вступление",
+ verse:"Куплет: Gm · Cm · F · Dm",
+ chorus:"Припев: Bb · C · Eb · Gm"
 },
 
 {
-artist:"Мумий Тролль",
-title:"Наркотики",
-chords:"Am · F · C · G",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:110,
-capo:"—",
-mood:"драйв",
-verified:false,
-note:"Требует дополнительной проверки."
+ a:"Мумий Тролль", t:"Наркотики", d:2,
+ verified:false
 },
 
 {
-artist:"Мумий Тролль",
-title:"Карнавала.Нет",
-chords:"F#m · A · E / D · F#m · D · A · E / F#m · C#m · A · H",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:115,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Основные части подтверждены."
+ a:"Мумий Тролль", t:"Карнавала.Нет", d:2,
+ verified:true,
+ chords:"F#m · A · E · D",
+ intro:"F#m · A · E",
+ verse:"Куплет: F#m · A · E",
+ chorus:"Припев: D · F#m · D · A · E"
 },
 
 /* ================= ЧИЖ ================= */
 
 {
-artist:"Чиж & Co",
-title:"О любви",
-chords:"D · F#7/C# · Bm7 · G · A",
-difficulty:3,
-beat:"↓ ↓ ↓ ↓ ↑",
-bpm:85,
-capo:"—",
-mood:"романтика",
-verified:true,
-note:"Есть басовое обращение F#7/C#."
+ a:"Чиж & Co", t:"О любви", d:2,
+ verified:true,
+ chords:"D · F#7/C# · Bm7 · G · A",
+ beat:"↓↓↓ ↓↑",
+ intro:"Вступление",
+ verse:"Куплет: D · F#7/C# · Bm7",
+ chorus:"Припев: G · A · D · Bm7"
 },
 
 {
-artist:"Чиж & Co",
-title:"Перекрёсток",
-chords:"Am · Dm · G · C",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:85,
-capo:"—",
-mood:"грусть",
-verified:false,
-note:"Упрощённый вариант."
+ a:"Чиж & Co", t:"Перекрёсток", d:2,
+ verified:false
 },
 
 {
-artist:"Чиж & Co",
-title:"Вот пуля просвистела",
-chords:"Am · C · A7 · Dm · Am · F · G",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:120,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Основная последовательность подтверждена."
+ a:"Чиж & Co", t:"Вот пуля просвистела", d:2,
+ verified:true,
+ chords:"Am · C · A7 · Dm · F · G",
+ intro:"Вступление",
+ verse:"Куплет: Am · C · A7 · Dm",
+ chorus:"Припев: Am · F · G"
 },
 
 {
-artist:"Чиж & Co",
-title:"А не спеть ли мне песню",
-chords:"D · F#7 · Bm · G · A",
-difficulty:3,
-beat:"↓ ↓ ↓ ↓ ↑",
-bpm:90,
-capo:"—",
-mood:"душевное",
-verified:false,
-note:"Требует дополнительной сверки."
+ a:"Чиж & Co", t:"А не спеть ли мне песню", d:1,
+ verified:false
 },
 
 {
-artist:"Чиж & Co",
-title:"Фантом",
-chords:"Am · E / Am · Dm · G · C · E",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑ ↓ ↑",
-bpm:105,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Вступление Am×4–E."
+ a:"Чиж & Co", t:"Фантом", d:2,
+ verified:true,
+ chords:"Am · E · Dm · G · C",
+ beat:"↓↓↑↑↓↑",
+ intro:"Am ×4 · E",
+ verse:"Куплет: Am · E · Am",
+ chorus:"Припев: Am · Dm · G · C · E"
 },
 
 {
-artist:"Чиж & Co",
-title:"Вечная молодость",
-chords:"Am · F · C · G",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:105,
-capo:"—",
-mood:"ностальгия",
-verified:false,
-note:"Упрощённая схема."
+ a:"Чиж & Co", t:"Вечная молодость", d:2,
+ verified:false
 },
 
 /* ================= МАШИНА ВРЕМЕНИ ================= */
 
 {
-artist:"Машина времени",
-title:"Поворот",
-chords:"C · A7 · Dm · C · G7 / Dm · G7 · Em · A7 · Dm · Fm · C · A7",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:100,
-capo:"—",
-mood:"ностальгия",
-verified:true,
-note:"Полная основная схема."
+ a:"Машина времени", t:"Поворот", d:2,
+ verified:true,
+ chords:"C · A7 · Dm · G7 · Em · Fm",
+ intro:"Вступление",
+ verse:"Куплет: C · A7 · Dm · C · G7",
+ chorus:"Припев: Dm · G7 · Em · A7 · Dm · Fm · C · A7"
 },
 
 {
-artist:"Машина времени",
-title:"Костёр",
-chords:"Em · G · D · C · Bm · Em",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:80,
-capo:"—",
-mood:"душевное",
-verified:true,
-note:"Основная схема подтверждена."
+ a:"Машина времени", t:"Костёр", d:2,
+ verified:true,
+ chords:"Em · G · D · C · Bm",
+ intro:"C · D · Em / Em · C · D · Em",
+ verse:"Куплет: Em · G · D · C · Bm · Em",
+ chorus:"Припев: Em · G · D · C"
 },
 
 {
-artist:"Машина времени",
-title:"За тех, кто в море",
-chords:"Am · G · Em · F · Fm · Dm7 · D7 / C · Am · Dm7 · G",
-difficulty:4,
-beat:"↓ ↑ ↓ ↑",
-bpm:80,
-capo:"—",
-mood:"душевное",
-verified:true,
-note:"Есть переход через Fm."
+ a:"Машина времени", t:"За тех, кто в море", d:2,
+ verified:true,
+ chords:"C · Am · Dm7 · Fm · G · D7",
+ intro:"C · Am · Dm7 · Fm · C · Am · Dm7 · D7",
+ verse:"Куплет: Am · G · Em · F · Fm · Dm7 · D7",
+ chorus:"Припев: C · Am · Dm7 · G"
 },
 
 {
-artist:"Машина времени",
-title:"Марионетки",
-chords:"G · C/G / G · Em · C · G",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:95,
-capo:"—",
-mood:"ностальгия",
-verified:true,
-note:"Вступление G–C/G."
+ a:"Машина времени", t:"Марионетки", d:1,
+ verified:true,
+ chords:"G · Em · C",
+ intro:"G · C/G · G · C/G",
+ verse:"Куплет: G · Em · C · G",
+ chorus:"Припев: G · Em · C · G"
 },
 
 {
-artist:"Машина времени",
-title:"Однажды мир прогнётся под нас",
-chords:"Em · D · C · H7 / Am · H7 / Em · D · A · C · H7 · Em",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:105,
-capo:"—",
-mood:"душевное",
-verified:true,
-note:"Основная последовательность подтверждена."
+ a:"Машина времени", t:"Однажды мир прогнётся под нас", d:2,
+ verified:true,
+ chords:"Em · D · C · B7 · Am · A",
+ intro:"Вступление",
+ verse:"Куплет: Em · D · C · B7",
+ chorus:"Припев: Em · D · A · C · B7 · Em"
 },
 
 {
-artist:"Машина времени",
-title:"Скачки",
-chords:"Am · Dm · G · C",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑",
-bpm:110,
-capo:"—",
-mood:"драйв",
-verified:false,
-note:"Требует дополнительной проверки."
+ a:"Машина времени", t:"Скачки", d:2,
+ verified:false
 },
 
 {
-artist:"Машина времени",
-title:"Он был старше её",
-chords:"Am · Dm · G · C",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:80,
-capo:"—",
-mood:"романтика",
-verified:false,
-note:"Упрощённая схема."
+ a:"Машина времени", t:"Он был старше её", d:2,
+ verified:false
 },
 
 /* ================= АКВАРИУМ ================= */
 
 {
-artist:"Аквариум",
-title:"Город золотой",
-chords:"Am · E7 · Am / Dm · Dm6 · F+7 · E7 / A7 · Dm · G7 · C · Dm · F7 · E7",
-difficulty:4,
-beat:"↓ ↑ ↓ ↑",
-bpm:75,
-capo:"—",
-mood:"романтика",
-verified:true,
-note:"Оригинальная гармония заметно сложнее упрощённых вариантов."
+ a:"Аквариум", t:"Город золотой", d:2,
+ verified:true,
+ chords:"Am · E7 · Dm · F · A7 · G7 · C",
+ intro:"Am · E7 · Am",
+ verse:"Куплет: Dm · Dm6 · F+7 · E7",
+ chorus:"Припев: A7 · Dm · G7 · C · Dm · F7 · E7"
 },
 
 {
-artist:"Аквариум",
-title:"Поезд в огне",
-chords:"D · Em · G · Dsus4 · D",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:85,
-capo:"—",
-mood:"грусть",
-verified:true,
-note:"Основная схема подтверждена."
+ a:"Аквариум", t:"Поезд в огне", d:2,
+ verified:true,
+ chords:"D · Em · G · Dsus4",
+ intro:"Вступление",
+ verse:"Куплет: D · Em · G · Dsus4 · D",
+ chorus:"Припев"
 },
 
 {
-artist:"Аквариум",
-title:"Серебро Господа моего",
-chords:"C · F · C · Am / C · F · C · G / F · G · F · G / F · Dm · G",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:80,
-capo:"—",
-mood:"душевное",
-verified:true,
-note:"Основная схема подтверждена."
+ a:"Аквариум", t:"Серебро Господа моего", d:2,
+ verified:true,
+ chords:"C · F · Am · G · Dm",
+ intro:"C · F · C · Am",
+ verse:"Куплет: C · F · C · G",
+ chorus:"Припев: F · G · F · G · F · Dm · G"
 },
 
 {
-artist:"Аквариум",
-title:"Рок-н-ролл мёртв",
-chords:"Em · Bm · C / Em · Bm · D · Em / Am · Em · D · Em / G · D · Bm7 · Em · C · G · D · Em",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:115,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Полная основная схема."
+ a:"Аквариум", t:"Рок-н-ролл мёртв", d:2,
+ verified:true,
+ chords:"Em · Bm · C · D · Am · G",
+ intro:"Em · Bm · C",
+ verse:"Куплет: Em · Bm · D · Em",
+ chorus:"Припев: Am · Em · D · Em · G · D · Bm7 · Em"
 },
 
 {
-artist:"Аквариум",
-title:"Стаканы",
-chords:"C · G · C · Am · G · C",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:85,
-capo:"—",
-mood:"душевное",
-verified:true,
-note:"Простой вариант."
+ a:"Аквариум", t:"Стаканы", d:1,
+ verified:true,
+ chords:"C · G · Am",
+ intro:"Вступление",
+ verse:"Куплет: C · G · C · Am · G · C",
+ chorus:"Припев: C · G · C"
 },
 
 {
-artist:"Аквариум",
-title:"Сестра",
-chords:"G · D · Em · C · D",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:90,
-capo:"—",
-mood:"романтика",
-verified:true,
-note:"Основная схема подтверждена."
+ a:"Аквариум", t:"Сестра", d:1,
+ verified:true,
+ chords:"G · D · Em · C",
+ intro:"Вступление",
+ verse:"Куплет: G · D · Em · C",
+ chorus:"Припев: G · D · Em · C · D"
 },
 
-/* ================= ДОПОЛНИТЕЛЬНЫЕ ================= */
+/* ================= АЛИСА ================= */
 
 {
-artist:"Алиса",
-title:"Трасса Е-95",
-chords:"Bm · A · D · A / Bm · F#m · Em · Bm",
-difficulty:3,
-beat:"↓ ↓ ↑ ↑",
-bpm:120,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Вступление Bm–A–D–A."
+ a:"Алиса", t:"Трасса Е-95", d:2,
+ verified:true,
+ chords:"Bm · A · D · F#m · Em",
+ intro:"Bm · A · D · A ×4",
+ verse:"Куплет: Bm · F#m · Em · Bm",
+ chorus:"Припев"
 },
 
 {
-artist:"Алиса",
-title:"Небо славян",
-chords:"Em · A · C · Em / Em · A · C · E",
-difficulty:3,
-beat:"↓ ↓ ↑ ↑",
-bpm:125,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Основная схема подтверждена."
+ a:"Алиса", t:"Небо славян", d:2,
+ verified:true,
+ chords:"Em · A · C · E",
+ intro:"Em · A · C · Em / Em · A · C · E",
+ verse:"Куплет",
+ chorus:"Припев"
+},
+
+/* ================= ПИКНИК ================= */
+
+{
+ a:"Пикник", t:"Египтянин", d:2,
+ verified:true,
+ chords:"Am · F · G · Dm · E",
+ intro:"Вступление",
+ verse:"Куплет: Am · F · G · Dm · E",
+ chorus:"Припев: Am · Dm · G · C · F · Dm · E"
 },
 
 {
-artist:"Пикник",
-title:"Египтянин",
-chords:"Am · F · G · Dm · E / Am · Dm · G · C / F · Dm · E",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:105,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Основная гармония подтверждена."
+ a:"Пикник", t:"У шамана три руки", d:3,
+ verified:true,
+ chords:"F#m · Bm · D · E · B · C#",
+ intro:"F#m · Bm · D / F#m · Bm · E",
+ verse:"Куплет: Bm · D · G · C#",
+ chorus:"Припев: F#m · B · E"
+},
+
+/* ================= АРИЯ ================= */
+
+{
+ a:"Ария", t:"Беспечный ангел", d:2,
+ verified:true,
+ chords:"Em · C · G · D · Am · B7",
+ intro:"Em · C · G",
+ verse:"Куплет: Em · C · G · Em · C · D",
+ chorus:"Припев: Em · C · G · Am · B7"
 },
 
 {
-artist:"Пикник",
-title:"У шамана три руки",
-chords:"F#m · Bm · D / F#m · Bm · E / Bm · D · G · C# / F#m · B · E",
-difficulty:4,
-beat:"↓ ↓ ↑ ↑",
-bpm:115,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Не самая простая песня из-за баррэ и C#."
+ a:"Ария", t:"Штиль", d:3,
+ verified:true,
+ chords:"Em · D · Am · C · Bm",
+ intro:"Em · D · Dsus4 · D",
+ verse:"Куплет: Am · Asus2 · Am · Em",
+ chorus:"Припев: Cmaj7/G · Dsus2/A · Cmaj7/G · Bm"
+},
+
+/* ================= ЛЮБЭ ================= */
+
+{
+ a:"Любэ", t:"Конь", d:1,
+ verified:true,
+ chords:"Em · C · G · B7 · Am · D",
+ intro:"Вступление",
+ verse:"Куплет: Em · C · G · B7",
+ chorus:"Припев: Am · D · G · C · Am · B7 · Em"
 },
 
 {
-artist:"Ария",
-title:"Беспечный ангел",
-chords:"Em · C · G / Em · C · D / Am · B7",
-difficulty:3,
-beat:"↓ ↓ ↑ ↑",
-bpm:120,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Основная гармония подтверждена."
+ a:"Любэ", t:"Комбат", d:2,
+ verified:true,
+ chords:"Am · E · Dm · F",
+ intro:"Am · E · Am · Dm · Am · E · Am",
+ verse:"Куплет: Am · Dm · Am · F · Dm · Am · E · Am",
+ chorus:"Припев"
+},
+
+/* ================= ТАНЦЫ МИНУС ================= */
+
+{
+ a:"Танцы минус", t:"Половинка", d:1,
+ verified:true,
+ chords:"Dm · Bb · F · A",
+ intro:"Вступление",
+ verse:"Куплет: Dm · Bb · F · A",
+ chorus:"Припев: Dm · Bb · F · A"
 },
 
 {
-artist:"Ария",
-title:"Штиль",
-chords:"Em · D · Dsus4 · D / Am · Asus2 · Am · Em",
-difficulty:3,
-beat:"↓ ↓ ↑ ↓ ↓ ↑ ↓",
-bpm:85,
-capo:"—",
-mood:"грусть",
-verified:true,
-note:"В оригинале используются дополнительные обращения."
+ a:"Танцы минус", t:"Город", d:1,
+ verified:true,
+ chords:"Em · C · Am · B7",
+ intro:"Em · C · Am · B7",
+ verse:"Куплет: Em · C · Am · B7",
+ chorus:"Припев: Em · C · Am · B7"
+},
+
+/* ================= НОЧНЫЕ СНАЙПЕРЫ ================= */
+
+{
+ a:"Ночные снайперы", t:"31-я весна", d:2,
+ verified:true,
+ chords:"Em · C · Am · B7 · G",
+ intro:"Вступление",
+ verse:"Куплет: Em · C · Am · Em · B7",
+ chorus:"Припев: C · Am · G · B7"
 },
 
 {
-artist:"Любэ",
-title:"Конь",
-chords:"Em · C · G · H7 / Am · D · G · C / Am · H7 · Em",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:80,
-capo:"—",
-mood:"душевное",
-verified:true,
-note:"Выбран удобный вариант без каподастра."
+ a:"Ночные снайперы", t:"Асфальт", d:3,
+ verified:true,
+ chords:"Dm · A# · F · Gm · Cm · G# · C# · A",
+ intro:"Вступление",
+ verse:"Куплет: Dm · A# · F / Gm · Cm · G# · C# · A",
+ chorus:"Припев: A# · A7 · Dm · A# · Gm · A7 · Dm · A#"
+},
+
+/* ================= НОЛЬ ================= */
+
+{
+ a:"Ноль", t:"Человек и кошка", d:2,
+ verified:true,
+ chords:"Am · Am+7 · Am7 · D · F · E7",
+ intro:"Am · Am+7 · Am7 · D",
+ verse:"Куплет: F · Am · F · E7",
+ chorus:"Припев: C · G · F · G · C · G · F · E"
+},
+
+/* ================= БРАВО ================= */
+
+{
+ a:"Браво", t:"Этот город", d:2,
+ verified:true,
+ chords:"Am · C · E · F · Dm",
+ intro:"Вступление",
+ verse:"Куплет: Am · C · E / Am · F · E",
+ chorus:"Припев: Dm · C · A · Dm · B · C · A"
 },
 
 {
-artist:"Любэ",
-title:"Комбат",
-chords:"Am · Dm · Am · F / Dm · Am · E · Am",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑",
-bpm:120,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Основная схема подтверждена."
+ a:"Браво", t:"Любите, девушки", d:1,
+ verified:true,
+ chords:"C · Em · Am · F · G · Dm",
+ intro:"Вступление",
+ verse:"Куплет: C · Em · Am · F",
+ chorus:"Припев: G · Dm · G · C"
+},
+
+/* ================= КУКРЫНИКСЫ ================= */
+
+{
+ a:"Кукрыниксы", t:"Звезда", d:2,
+ verified:false
+},
+
+/* ================= ЛЯПИС ================= */
+
+{
+ a:"Ляпис Трубецкой", t:"Ау", d:1,
+ verified:true,
+ chords:"Am · Dm · F · E",
+ intro:"Вступление",
+ verse:"Куплет: Am · Dm · F · E",
+ chorus:"Припев: Am · Dm · F · E"
 },
 
 {
-artist:"Танцы Минус",
-title:"Половинка",
-chords:"Dm · Bb · F · A",
-difficulty:2,
-beat:"↓ ↓ ↓ ↓ ↑",
-bpm:95,
-capo:"—",
-mood:"романтика",
-verified:true,
-note:"Выбран вариант в Dm."
-},
-
-{
-artist:"Танцы Минус",
-title:"Город",
-chords:"Am · F · C · G",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:100,
-capo:"—",
-mood:"романтика",
-verified:false,
-note:"Требует дополнительной проверки."
-},
-
-{
-artist:"Ночные снайперы",
-title:"31-я весна",
-chords:"Em · C · Am · Em · B7 / C · Am · G · B7",
-difficulty:3,
-beat:"↓ ↑ ↓ ↑",
-bpm:95,
-capo:"—",
-mood:"грусть",
-verified:true,
-note:"Основная схема подтверждена."
-},
-
-{
-artist:"Ночные снайперы",
-title:"Асфальт",
-chords:"Dm · A# · F / Gm · Cm · G# · C# · A / A# · A7 · Dm · A#",
-difficulty:4,
-beat:"↓ ↓ ↑ ↑",
-bpm:90,
-capo:"—",
-mood:"грусть",
-verified:true,
-note:"Оригинальная гармония достаточно сложная."
-},
-
-{
-artist:"Ноль",
-title:"Человек и кошка",
-chords:"Am · Am+7 · Am7 · D / F · Am · F · E7",
-difficulty:4,
-beat:"↓ ↑ ↓ ↑",
-bpm:90,
-capo:"—",
-mood:"грусть",
-verified:true,
-note:"Оригинальная версия содержит несколько вариантов Am."
-},
-
-{
-artist:"Браво",
-title:"Этот город",
-chords:"Am · C · E / Am · F · E / Dm · C · Am · F · E",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:115,
-capo:"—",
-mood:"романтика",
-verified:true,
-note:"Удобный вариант для акустики."
-},
-
-{
-artist:"Браво",
-title:"Любите, девушки",
-chords:"C · Em · Am · F · G · Dm",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:120,
-capo:"—",
-mood:"романтика",
-verified:true,
-note:"Выбрана удобная тональность C."
-},
-
-{
-artist:"Кукрыниксы",
-title:"Звезда",
-chords:"Am · F · C · G",
-difficulty:2,
-beat:"↓ ↑ ↓ ↑",
-bpm:100,
-capo:"—",
-mood:"грусть",
-verified:false,
-note:"Требует дополнительной проверки."
-},
-
-{
-artist:"Ляпис Трубецкой",
-title:"Ау",
-chords:"Am · Dm · F · E / E7",
-difficulty:2,
-beat:"↓ ↓ ↑ ↑",
-bpm:130,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Основная последовательность подтверждена."
-},
-
-{
-artist:"Ляпис Трубецкой",
-title:"Воины света",
-chords:"Am · F · G · C",
-difficulty:1,
-beat:"↓ ↑ ↓ ↑",
-bpm:120,
-capo:"—",
-mood:"драйв",
-verified:true,
-note:"Очень удобная последовательность."
+ a:"Ляпис Трубецкой", t:"Воины света", d:1,
+ bpm:105,
+ verified:true,
+ chords:"Am · F · G · C",
+ intro:"Вступление",
+ verse:"Куплет: Am · F · G · C",
+ chorus:"Припев: Am · F · G · C"
 }
 
 ];
 
 
 /* =========================================================
-   ЛОГИКА
-========================================================= */
+   СОСТОЯНИЕ
+   ========================================================= */
 
 let currentSong = null;
-let currentMood = "all";
-let filteredSongs = [...songs];
+let favorites = JSON.parse(localStorage.getItem("guitarFavorites") || "[]");
+let showFav = false;
 
-const tg = window.Telegram?.WebApp;
 
-if (tg) {
-    tg.ready();
-    tg.expand();
+/* =========================================================
+   ИНИЦИАЛИЗАЦИЯ
+   ========================================================= */
 
-    if (tg.setHeaderColor) {
-        tg.setHeaderColor("#101010");
+const tg = window.Telegram && window.Telegram.WebApp
+  ? window.Telegram.WebApp
+  : null;
+
+if(tg){
+  tg.ready();
+  tg.expand();
+
+  try{
+    tg.setHeaderColor("#0e0f12");
+    tg.setBackgroundColor("#0e0f12");
+  }catch(e){}
+}
+
+const artistFilter = document.getElementById("artistFilter");
+
+[...new Set(songs.map(s => s.a))]
+  .sort((a,b)=>a.localeCompare(b,"ru"))
+  .forEach(artist=>{
+    const option=document.createElement("option");
+    option.value=artist;
+    option.textContent=artist;
+    artistFilter.appendChild(option);
+  });
+
+
+/* =========================================================
+   УТИЛИТЫ
+   ========================================================= */
+
+function stars(d){
+  return "⭐".repeat(d);
+}
+
+function isFavorite(song){
+  return favorites.includes(song.a + "|" + song.t);
+}
+
+function toggleFavorite(){
+  if(!currentSong) return;
+
+  const key=currentSong.a+"|"+currentSong.t;
+
+  if(favorites.includes(key)){
+    favorites=favorites.filter(x=>x!==key);
+  }else{
+    favorites.push(key);
+  }
+
+  localStorage.setItem("guitarFavorites",JSON.stringify(favorites));
+  renderCurrent();
+}
+
+function escapeHtml(str){
+  if(!str) return "";
+  return String(str)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;");
+}
+
+
+/* =========================================================
+   ФИЛЬТРАЦИЯ
+   ========================================================= */
+
+function getFilteredSongs(){
+
+  const search=
+    document.getElementById("search").value
+      .trim()
+      .toLowerCase();
+
+  const artist=
+    document.getElementById("artistFilter").value;
+
+  const diff=
+    document.getElementById("difficultyFilter").value;
+
+  const verifiedOnly=
+    document.getElementById("verifiedOnly").checked;
+
+  return songs.filter(song=>{
+
+    if(verifiedOnly && !song.verified) return false;
+
+    if(artist && song.a!==artist) return false;
+
+    if(diff && String(song.d)!==diff) return false;
+
+    if(search){
+
+      const hay=(song.a+" "+song.t).toLowerCase();
+
+      if(!hay.includes(search)) return false;
     }
 
-    if (tg.setBackgroundColor) {
-        tg.setBackgroundColor("#101010");
-    }
+    return true;
+  });
 }
 
 
-/* ================= ИЗБРАННОЕ ================= */
+/* =========================================================
+   РЕНДЕР СЛУЧАЙНОЙ ПЕСНИ
+   ========================================================= */
 
-function getFavorites() {
-    try {
-        return JSON.parse(localStorage.getItem("guitarFavorites") || "[]");
-    } catch {
-        return [];
-    }
-}
+function randomSong(){
 
-function saveFavorites(arr) {
-    localStorage.setItem("guitarFavorites", JSON.stringify(arr));
-}
+  const list=getFilteredSongs();
 
-function songKey(song) {
-    return song.artist + "||" + song.title;
-}
+  if(!list.length){
 
-function isFavorite(song) {
-    return getFavorites().includes(songKey(song));
-}
+    currentSong=null;
 
-function toggleFavorite() {
+    document.getElementById("content").innerHTML=`
+      <div class="empty">
+        Ничего не найдено.<br>
+        Попробуй изменить фильтры.
+      </div>
+    `;
 
-    if (!currentSong) return;
+    return;
+  }
 
-    let fav = getFavorites();
-    const key = songKey(currentSong);
+  currentSong=list[Math.floor(Math.random()*list.length)];
 
-    if (fav.includes(key)) {
-        fav = fav.filter(x => x !== key);
-    } else {
-        fav.push(key);
-    }
+  renderCurrent();
 
-    saveFavorites(fav);
-    updateFavoriteIcon();
-}
-
-function updateFavoriteIcon() {
-    document.getElementById("favorite").textContent =
-        isFavorite(currentSong) ? "♥" : "♡";
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
 
 
-/* ================= ФИЛЬТРЫ ================= */
+/* =========================================================
+   КАРТОЧКА ПЕСНИ
+   ========================================================= */
 
-function initArtists() {
+function renderCurrent(){
 
-    const select = document.getElementById("artistFilter");
+  const content=document.getElementById("content");
 
-    const artists = [...new Set(songs.map(s => s.artist))]
-        .sort((a,b) => a.localeCompare(b, "ru"));
-
-    artists.forEach(artist => {
-
-        const option = document.createElement("option");
-
-        option.value = artist;
-        option.textContent = artist;
-
-        select.appendChild(option);
-    });
-}
-
-function applyFilters() {
-
-    const difficulty =
-        document.getElementById("difficultyFilter").value;
-
-    const artist =
-        document.getElementById("artistFilter").value;
-
-    filteredSongs = songs.filter(song => {
-
-        const diffOk =
-            difficulty === "all" ||
-            String(song.difficulty) === difficulty;
-
-        const artistOk =
-            artist === "all" ||
-            song.artist === artist;
-
-        const moodOk =
-            currentMood === "all" ||
-            song.mood === currentMood;
-
-        return diffOk && artistOk && moodOk;
-    });
-
-    if (!filteredSongs.length) {
-        alert("По этим фильтрам песен не найдено.");
-        return;
-    }
-
+  if(!currentSong){
     randomSong();
-}
+    return;
+  }
 
+  const s=currentSong;
+  const chordsOnly=document.getElementById("chordsOnly").checked;
 
-/* ================= НАСТРОЕНИЯ ================= */
+  let html=`
+    <div class="song">
 
-function setMood(mood, element) {
+      <div class="songTop">
 
-    currentMood = mood;
+        <button
+          class="favorite"
+          onclick="toggleFavorite()"
+          title="Избранное"
+        >
+          ${isFavorite(s) ? "♥" : "♡"}
+        </button>
 
-    document.querySelectorAll(".mood")
-        .forEach(x => x.classList.remove("active"));
-
-    element.classList.add("active");
-
-    applyFilters();
-}
-
-
-/* ================= СЛУЧАЙНАЯ ПЕСНЯ ================= */
-
-function randomSong() {
-
-    if (!filteredSongs.length) {
-        filteredSongs = [...songs];
-    }
-
-    const index =
-        Math.floor(Math.random() * filteredSongs.length);
-
-    currentSong = filteredSongs[index];
-
-    renderSong(currentSong);
-}
-
-function renderSong(song) {
-
-    document.getElementById("artist").textContent =
-        song.artist;
-
-    document.getElementById("title").textContent =
-        song.title;
-
-    const diff = document.getElementById("difficulty");
-
-    diff.textContent =
-        "⭐".repeat(song.difficulty);
-
-    diff.className = "tag " +
-        (
-            song.difficulty <= 2
-                ? "easy"
-                : song.difficulty === 3
-                    ? "medium"
-                    : "hard"
-        );
-
-    document.getElementById("moodTag").textContent =
-        "♪ " + song.mood;
-
-    document.getElementById("verifiedTag").textContent =
-        song.verified
-            ? "✓ Аккорды проверены"
-            : "⚠ Требует проверки";
-
-    document.getElementById("chords").textContent =
-        song.chords;
-
-    document.getElementById("beat").textContent =
-        song.beat;
-
-    document.getElementById("bpm").textContent =
-        song.bpm + " BPM";
-
-    document.getElementById("capo").textContent =
-        song.capo;
-
-    document.getElementById("mood").textContent =
-        song.mood;
-
-    document.getElementById("note").textContent =
-        song.note;
-
-    const verification =
-        document.getElementById("verification");
-
-    if (song.verified) {
-
-        verification.innerHTML =
-            `<div class="verified">
-                ✓ Аккордовая схема проверена и пригодна
-                для использования в карточке песни.
-            </div>`;
-
-    } else {
-
-        verification.innerHTML =
-            `<div class="notice">
-                ⚠️ Эта карточка пока содержит только
-                рабочую/упрощённую схему.
-                Не воспринимай её как гарантированно
-                оригинальные аккорды.
-            </div>`;
-    }
-
-    updateFavoriteIcon();
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-}
-
-
-/* ================= СЕТ ================= */
-
-function makeSet() {
-
-    const setCard =
-        document.getElementById("setCard");
-
-    const candidates =
-        songs.filter(song => song.difficulty <= 3);
-
-    const shuffled =
-        [...candidates].sort(() => Math.random() - .5);
-
-    const set = shuffled.slice(0, 8);
-
-    let html = `
-        <div class="card">
-            <div class="song-title">
-                🎤 Сет примерно на 30 минут
-            </div>
-            <div class="small">
-                Подобрал песни, которые реально удобно
-                играть подряд на акустической гитаре.
-            </div>
-            <div class="set-list">
-    `;
-
-    set.forEach((song, index) => {
-
-        html += `
-            <div class="set-item">
-                <b>${index + 1}. ${song.artist} — ${song.title}</b>
-                <br>
-                <span class="small">
-                    ${"⭐".repeat(song.difficulty)}
-                    · ${song.bpm} BPM
-                </span>
-            </div>
-        `;
-    });
-
-    html += `
-            </div>
+        <div class="artist">
+          ${escapeHtml(s.a)}
         </div>
+
+        <div class="title">
+          ${escapeHtml(s.t)}
+        </div>
+
+        <div class="songMeta">
+
+          <span class="badge">
+            ${stars(s.d)}
+          </span>
+
+          ${
+            s.bpm
+            ? `<span class="badge">♩ ${s.bpm} BPM</span>`
+            : ""
+          }
+
+          ${
+            s.beat
+            ? `<span class="badge">🥁 ${escapeHtml(s.beat)}</span>`
+            : ""
+          }
+
+          ${
+            s.verified
+            ? `<span class="badge good">✓ аккорды проверены</span>`
+            : `<span class="badge warn">⚠ требует проверки</span>`
+          }
+
+        </div>
+
+      </div>
+  `;
+
+
+  /* НЕПРОВЕРЕННАЯ ПЕСНЯ */
+
+  if(!s.verified){
+
+    html+=`
+      <div class="unverified">
+        <b>⚠ Аккорды пока не добавлены.</b><br><br>
+        Эта песня есть в каталоге, но я специально не
+        подставляю сюда предполагаемые аккорды.
+        Лучше ничего, чем неправильная схема.
+      </div>
     `;
 
-    setCard.innerHTML = html;
+    html+=`</div>`;
 
-    setCard.scrollIntoView({
-        behavior: "smooth"
-    });
-}
+    content.innerHTML=html;
+
+    return;
+  }
 
 
-/* ================= ИЗБРАННЫЕ ================= */
+  /* ТОЛЬКО АККОРДЫ */
 
-function showFavorites() {
+  if(chordsOnly){
 
-    const fav = getFavorites();
+    html+=`
+      <div class="chordBlock">
 
-    const setCard =
-        document.getElementById("setCard");
+        <div class="mainLabel">
+          Основная схема
+        </div>
 
-    if (!fav.length) {
+        <div class="mainChords">
+          ${escapeHtml(s.chords)}
+        </div>
 
-        setCard.innerHTML = `
-            <div class="card">
-                <div class="song-title">
-                    ⭐ Избранное пусто
-                </div>
-                <div class="extra">
-                    Нажимай ♡ на понравившихся песнях,
-                    чтобы добавить их сюда.
-                </div>
-            </div>
-        `;
-
-        setCard.scrollIntoView({
-            behavior:"smooth"
-        });
-
-        return;
-    }
-
-    const favoriteSongs =
-        songs.filter(song =>
-            fav.includes(songKey(song))
-        );
-
-    let html = `
-        <div class="card">
-            <div class="song-title">
-                ⭐ Мои песни
-            </div>
+      </div>
     `;
 
-    favoriteSongs.forEach((song, index) => {
+    html+=`</div>`;
 
-        html += `
-            <div class="set-item"
-                 onclick="openFavorite(${songs.indexOf(song)})">
-                <b>${index + 1}. ${song.artist} — ${song.title}</b>
-                <br>
-                <span class="small">
-                    ${"⭐".repeat(song.difficulty)}
-                    · ${song.mood}
-                </span>
-            </div>
-        `;
-    });
+    content.innerHTML=html;
 
-    html += `</div>`;
+    return;
+  }
 
-    setCard.innerHTML = html;
 
-    setCard.scrollIntoView({
-        behavior:"smooth"
-    });
+  /* ПОЛНАЯ КАРТОЧКА */
+
+  html+=`
+
+    <div class="chordBlock">
+
+      <div class="mainLabel">
+        Основные аккорды
+      </div>
+
+      <div class="mainChords">
+        ${escapeHtml(s.chords)}
+      </div>
+
+    </div>
+  `;
+
+
+  if(s.intro){
+
+    html+=section(
+      "🎸 Вступление",
+      s.intro
+    );
+  }
+
+  if(s.verse){
+
+    html+=section(
+      "🎤 Куплет",
+      s.verse
+    );
+  }
+
+  if(s.chorus){
+
+    html+=section(
+      "🔥 Припев",
+      s.chorus
+    );
+  }
+
+  if(s.bridge){
+
+    html+=section(
+      "🎵 Проигрыш / переход",
+      s.bridge
+    );
+  }
+
+
+  html+=`
+    <div class="note good">
+      <b>Как пользоваться:</b><br>
+      Это короткая гитарная шпаргалка.
+      Полный текст песни здесь намеренно не хранится.
+      Используй ориентиры разделов вместе с текстом,
+      который у тебя уже есть.
+    </div>
+  `;
+
+  html+=`</div>`;
+
+  content.innerHTML=html;
 }
 
-function openFavorite(index) {
 
-    currentSong = songs[index];
+function section(title,text){
 
-    renderSong(currentSong);
+  return `
+    <div class="section">
+
+      <div class="sectionTitle">
+        ${title}
+      </div>
+
+      <div class="line">
+
+        <div class="cue">
+          ${escapeHtml(text)}
+        </div>
+
+      </div>
+
+    </div>
+  `;
 }
 
 
-/* ================= ЗАПУСК ================= */
+/* =========================================================
+   СПИСОК / ПОИСК
+   ========================================================= */
 
-initArtists();
+function renderList(){
+
+  const list=getFilteredSongs();
+
+  if(!list.length){
+
+    document.getElementById("content").innerHTML=`
+      <div class="empty">
+        Ничего не найдено.
+      </div>
+    `;
+
+    return;
+  }
+
+  if(!currentSong || !list.includes(currentSong)){
+    currentSong=list[0];
+  }
+
+  renderCurrent();
+}
+
+
+/* =========================================================
+   ИЗБРАННОЕ
+   ========================================================= */
+
+function showFavorites(){
+
+  showFav=!showFav;
+
+  if(!showFav){
+
+    renderList();
+
+    return;
+  }
+
+  const favSongs=songs.filter(s=>isFavorite(s));
+
+  if(!favSongs.length){
+
+    document.getElementById("content").innerHTML=`
+      <div class="empty">
+        ❤️<br><br>
+        Здесь пока ничего нет.<br>
+        Нажми ♡ у песни, чтобы добавить её.
+      </div>
+    `;
+
+    return;
+  }
+
+  const html=favSongs.map(s=>`
+
+    <div
+      onclick="openSong('${escapeHtml(s.a)}','${escapeHtml(s.t)}')"
+      style="
+        background:var(--card);
+        border:1px solid var(--border);
+        border-radius:14px;
+        padding:13px;
+        margin-bottom:8px;
+        cursor:pointer;
+      "
+    >
+
+      <div style="
+        color:var(--accent);
+        font-size:12px;
+        font-weight:700;
+      ">
+        ${escapeHtml(s.a)}
+      </div>
+
+      <div style="
+        font-size:16px;
+        font-weight:800;
+        margin-top:2px;
+      ">
+        ${escapeHtml(s.t)}
+      </div>
+
+    </div>
+
+  `).join("");
+
+  document.getElementById("content").innerHTML=`
+
+    <div style="
+      color:var(--muted);
+      font-size:12px;
+      margin:8px 2px;
+    ">
+      ❤️ Избранное · ${favSongs.length}
+    </div>
+
+    ${html}
+
+  `;
+}
+
+
+function openSong(artist,title){
+
+  showFav=false;
+
+  currentSong=songs.find(
+    s=>s.a===artist && s.t===title
+  );
+
+  renderCurrent();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+/* =========================================================
+   СЕТ НА 30 МИНУТ
+   ========================================================= */
+
+function makeSet(){
+
+  const pool=songs.filter(s=>s.verified);
+
+  const shuffled=[...pool]
+    .sort(()=>Math.random()-.5);
+
+  const selected=shuffled.slice(0,7);
+
+  let total=0;
+
+  const items=selected.map((s,i)=>{
+
+    const minutes=4 + Math.floor(Math.random()*2);
+
+    total+=minutes;
+
+    return `
+      <div class="setItem">
+        <b>${i+1}. ${escapeHtml(s.a)}</b>
+        — ${escapeHtml(s.t)}
+        <span style="color:var(--muted)">
+          · ~${minutes} мин
+        </span>
+      </div>
+    `;
+  }).join("");
+
+  document.getElementById("content").innerHTML=`
+
+    <div class="set">
+
+      <h3>🎤 Сет на ~30 минут</h3>
+
+      ${items}
+
+      <div style="
+        color:var(--muted);
+        font-size:11px;
+        margin-top:12px;
+      ">
+        ${selected.length} песен · ориентировочно ${total} минут
+      </div>
+
+      <button
+        class="btn"
+        style="width:100%;margin-top:12px"
+        onclick="randomSong()"
+      >
+        🎸 Играть
+      </button>
+
+    </div>
+  `;
+}
+
+
+/* =========================================================
+   СТАРТ
+   ========================================================= */
+
 randomSong();
 
 </script>
