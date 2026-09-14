@@ -4,353 +4,595 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>🎸 Случайная песня</title>
+
 <style>
-:root{--bg:#101214;--card:#1b1e22;--card2:#25292e;--text:#f5f6f7;--muted:#9da3aa;--accent:#ffcc33}
+:root{
+  --bg:#101214;
+  --card:#1b1e22;
+  --card2:#25292e;
+  --text:#f5f6f7;
+  --muted:#9da3aa;
+  --accent:#ffcc33;
+}
+
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
-button,select{font:inherit}
-.app{max-width:560px;margin:auto;padding:calc(18px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom))}
-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.logo{font-size:26px;font-weight:800}
-.count{font-size:12px;color:var(--muted);background:var(--card2);padding:7px 10px;border-radius:20px}
-.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-select,.small{background:var(--card2);color:var(--text);border:1px solid #333840;border-radius:14px;padding:13px 12px;outline:none}
-.card{background:linear-gradient(145deg,#202429,#181b1f);border:1px solid #2b3036;border-radius:25px;padding:24px;margin-top:12px;box-shadow:0 16px 40px #0006}
-.badge{display:inline-block;color:var(--accent);background:#3a321c;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:700}
-.song{font-size:28px;font-weight:800;line-height:1.12;margin-top:16px}
-.artist{font-size:18px;color:#c8cdd2;margin-top:7px}
-.chords{font-size:20px;letter-spacing:.4px;margin:22px 0 15px}
-.tags{display:flex;gap:8px;flex-wrap:wrap}
-.tag{background:var(--card2);padding:8px 10px;border-radius:11px;color:#dfe3e6;font-size:13px}
-.actions{display:grid;grid-template-columns:1.5fr 1fr;gap:10px;margin-top:12px}
-.btn{border:0;border-radius:15px;padding:15px;font-weight:750;cursor:pointer}
-.primary{background:var(--text);color:#111}
-.secondary{background:var(--card2);color:var(--text);border:1px solid #333840}
-.btn:active{transform:scale(.98)}
-.favline{display:flex;justify-content:space-between;align-items:center;margin-top:12px;color:var(--muted);font-size:13px}
-.section{margin-top:18px;background:var(--card);border-radius:20px;padding:16px}
-.section h3{margin:0 0 12px;font-size:16px}
-.setlist{display:none}
-.setitem{padding:10px 0;border-bottom:1px solid #30343a}
-.setitem:last-child{border-bottom:0}
-.setitem b{display:block}
-.setitem span{font-size:12px;color:var(--muted)}
-.foot{text-align:center;color:#686e75;font-size:11px;margin-top:20px}
-@media(max-width:380px){.song{font-size:24px}.controls{grid-template-columns:1fr}}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+
+button,select{
+  font:inherit;
+}
+
+.app{
+  max-width:560px;
+  margin:auto;
+  padding:22px 16px 30px;
+}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:800;
+}
+
+.count{
+  font-size:12px;
+  color:var(--muted);
+  background:var(--card2);
+  padding:7px 10px;
+  border-radius:20px;
+}
+
+select{
+  width:100%;
+  background:var(--card2);
+  color:white;
+  border:1px solid #333840;
+  border-radius:14px;
+  padding:13px;
+  margin-bottom:12px;
+}
+
+.card{
+  background:linear-gradient(145deg,#202429,#181b1f);
+  border:1px solid #2b3036;
+  border-radius:25px;
+  padding:24px;
+  margin-top:8px;
+  box-shadow:0 16px 40px #0006;
+}
+
+.badge{
+  display:inline-block;
+  color:var(--accent);
+  background:#3a321c;
+  padding:6px 10px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.song{
+  font-size:28px;
+  font-weight:800;
+  line-height:1.12;
+  margin-top:16px;
+}
+
+.artist{
+  font-size:18px;
+  color:#c8cdd2;
+  margin-top:7px;
+}
+
+.chords{
+  font-size:20px;
+  margin:22px 0 12px;
+}
+
+.beat{
+  color:#b9bec4;
+  font-size:14px;
+  margin-bottom:15px;
+}
+
+.tags{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.tag{
+  background:var(--card2);
+  padding:8px 10px;
+  border-radius:11px;
+  color:#dfe3e6;
+  font-size:13px;
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:1.5fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+
+.btn{
+  border:0;
+  border-radius:15px;
+  padding:15px;
+  font-weight:750;
+  cursor:pointer;
+}
+
+.primary{
+  background:white;
+  color:#111;
+}
+
+.secondary{
+  background:var(--card2);
+  color:white;
+  border:1px solid #333840;
+}
+
+.btn:active{
+  transform:scale(.98);
+}
+
+.note{
+  color:#7f858b;
+  text-align:center;
+  font-size:12px;
+  margin-top:18px;
+  line-height:1.4;
+}
+
+@media(max-width:380px){
+  .song{
+    font-size:24px;
+  }
+}
 </style>
 </head>
 
 <body>
+
 <div class="app">
 
 <header>
   <div class="logo">🎸 Случайная песня</div>
-  <div class="count" id="count"></div>
+  <div class="count">30 песен</div>
 </header>
 
-<div class="controls">
-  <select id="genre">
-    <option value="Все жанры">🎵 Все жанры</option>
-    <option>Русский рок</option>
-    <option>Панк</option>
-    <option>Поп / рок</option>
-  </select>
-
-  <select id="level">
-    <option value="0">⭐ Любая сложность</option>
-    <option value="1">⭐ Легко</option>
-    <option value="2">⭐⭐ Средне</option>
-    <option value="3">⭐⭐⭐ Сложно</option>
-  </select>
-</div>
+<select id="level">
+  <option value="0">⭐ Любая сложность</option>
+  <option value="1">⭐ Легко</option>
+  <option value="2">⭐⭐ Средне</option>
+  <option value="3">⭐⭐⭐ Сложно</option>
+</select>
 
 <div class="card">
+
   <div class="badge">ТВОЯ ПЕСНЯ</div>
 
-  <div class="song" id="song">Пачка сигарет</div>
+  <div class="song" id="song"></div>
 
-  <div class="artist" id="artist">Кино</div>
+  <div class="artist" id="artist"></div>
 
-  <div class="chords" id="chords">
-    Am · C · Dm · E
-  </div>
+  <div class="chords" id="chords"></div>
+
+  <div class="beat" id="beat"></div>
 
   <div class="tags">
-    <div class="tag" id="stars">⭐⭐☆☆☆</div>
-    <div class="tag" id="genreName">Русский рок</div>
+
+    <div class="tag" id="stars"></div>
+
+    <div class="tag">
+      🎸 Основные аккорды
+    </div>
+
   </div>
+
 </div>
 
 <div class="actions">
+
   <button class="btn primary" onclick="randomSong()">
     🔀 Другая песня
   </button>
 
-  <button class="btn secondary" onclick="toggleFavorite()" id="favBtn">
-    ♡ Избранное
+  <button class="btn secondary"
+          onclick="toggleFavorite()"
+          id="favBtn">
+    ♡ В избранное
   </button>
+
 </div>
 
-<div class="favline">
-  <span id="favCount">❤️ Избранных: 0</span>
-
-  <button class="small" onclick="makeSet()">
-    🎤 Сет на 30 минут
-  </button>
-</div>
-
-<div class="section setlist" id="setlist">
-  <h3>🎤 Твой сет</h3>
-  <div id="setItems"></div>
-</div>
-
-<div class="foot">
-  110 песен · играй что выпадет 🎲
+<div class="note">
+  Аккорды — основные аккорды песни.<br>
+  Для полного разбора могут использоваться дополнительные аккорды.
 </div>
 
 </div>
+
 
 <script>
 
-const songs=[
+const songs = [
 
-{artist:"Кино",song:"Пачка сигарет",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"Кино",song:"Звезда по имени Солнце",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"Кино",song:"Кукушка",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"Кино",song:"Группа крови",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"Кино",song:"Перемен",chords:"Am · Dm · C · E",level:3,genre:"Русский рок"},
-{artist:"Кино",song:"Когда твоя девушка больна",chords:"Am · C · Dm · E",level:1,genre:"Русский рок"},
-{artist:"Кино",song:"Восьмиклассница",chords:"Am · C · Dm · E",level:1,genre:"Русский рок"},
-{artist:"Кино",song:"Алюминиевые огурцы",chords:"Am · C · Dm · E",level:1,genre:"Русский рок"},
-{artist:"Кино",song:"Мама, мы все сошли с ума",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"Кино",song:"Спокойная ночь",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{
+artist:"Кино",
+song:"Пачка сигарет",
+chords:"Am · C · D7 · Em",
+level:2,
+beat:"↓↑↓↑"
+},
 
-{artist:"Сплин",song:"Выхода нет",chords:"Em · C · G · D",level:2,genre:"Русский рок"},
-{artist:"Сплин",song:"Романс",chords:"Am · Dm · G · C",level:2,genre:"Русский рок"},
-{artist:"Сплин",song:"Моё сердце",chords:"Am · C · G · Em",level:2,genre:"Русский рок"},
-{artist:"Сплин",song:"Линия жизни",chords:"Am · C · G · Em",level:2,genre:"Русский рок"},
+{
+artist:"Кино",
+song:"Звезда по имени Солнце",
+chords:"Am · C · Dm · G",
+level:2,
+beat:"↓↑↓↑"
+},
 
-{artist:"ДДТ",song:"Что такое осень",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"ДДТ",song:"Это всё",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"ДДТ",song:"Просвистела",chords:"Am · C · G · E",level:2,genre:"Русский рок"},
-{artist:"ДДТ",song:"Метель",chords:"Am · Dm · E",level:2,genre:"Русский рок"},
-{artist:"ДДТ",song:"Родина",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{
+artist:"Кино",
+song:"Группа крови",
+chords:"F#m · C#m · A · E",
+level:3,
+beat:"↓↑↓↑"
+},
 
-{artist:"Чайф",song:"Аргентина — Ямайка 5:0",chords:"D · A · G · Em",level:1,genre:"Русский рок"},
-{artist:"Чайф",song:"Ой-йо",chords:"Am · C · G · D",level:1,genre:"Русский рок"},
-{artist:"Чайф",song:"Никто не услышит",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"Чайф",song:"17 лет",chords:"Am · C · G · D",level:1,genre:"Русский рок"},
+{
+artist:"Кино",
+song:"Перемен",
+chords:"F#m · Bm · A · E · G# · G#7",
+level:3,
+beat:"↓ ↓↑↓ ↓↑"
+},
 
-{artist:"Наутилус Помпилиус",song:"Гудбай, Америка",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"Наутилус Помпилиус",song:"Я хочу быть с тобой",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"Наутилус Помпилиус",song:"Крылья",chords:"Am · C · G · Em",level:2,genre:"Русский рок"},
-{artist:"Наутилус Помпилиус",song:"Прогулки по воде",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{
+artist:"Кино",
+song:"Когда твоя девушка больна",
+chords:"G · Em · C · D",
+level:1,
+beat:"↓ ↓↑↓ ↓↑"
+},
 
-{artist:"Агата Кристи",song:"Как на войне",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"Агата Кристи",song:"Опиум для никого",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"Агата Кристи",song:"Сказочная тайга",chords:"Am · C · G · Em",level:2,genre:"Русский рок"},
+{
+artist:"Кино",
+song:"Спокойная ночь",
+chords:"Am · G · Dm · C · F · Em",
+level:2,
+beat:"↓↑↓↑"
+},
 
-{artist:"Би-2",song:"Полковнику никто не пишет",chords:"Am · F · C · G",level:2,genre:"Русский рок"},
-{artist:"Би-2",song:"Мой рок-н-ролл",chords:"Am · F · C · G",level:2,genre:"Русский рок"},
-{artist:"Би-2",song:"Варвара",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
-{artist:"Би-2",song:"Серебро",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+{
+artist:"Сплин",
+song:"Выхода нет",
+chords:"C · G · D · Em",
+level:1,
+beat:"↓↑↓ ↓ ↓↑"
+},
 
-{artist:"Мумий Тролль",song:"Владивосток 2000",chords:"Am · C · D · E",level:2,genre:"Русский рок"},
-{artist:"Мумий Тролль",song:"Медведица",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
-{artist:"Мумий Тролль",song:"Утекай",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+{
+artist:"Сплин",
+song:"Романс",
+chords:"A7 · Dm · Gm · F",
+level:2,
+beat:"перебор"
+},
 
-{artist:"Земфира",song:"Хочешь?",chords:"Am · F · C · G",level:3,genre:"Поп / рок"},
-{artist:"Земфира",song:"Ромашки",chords:"Am · C · G · D",level:2,genre:"Поп / рок"},
-{artist:"Земфира",song:"Искала",chords:"Am · F · C · G",level:2,genre:"Поп / рок"},
-{artist:"Земфира",song:"Прости меня моя любовь",chords:"Am · C · G · D",level:2,genre:"Поп / рок"},
+{
+artist:"ДДТ",
+song:"Что такое осень",
+chords:"Am · E · A7 · Dm · F",
+level:2,
+beat:"↓ ↓↑↓↑"
+},
 
-{artist:"Король и Шут",song:"Лесник",chords:"Am · C · Dm · E",level:2,genre:"Панк"},
-{artist:"Король и Шут",song:"Кукла колдуна",chords:"Am · C · Dm · E",level:2,genre:"Панк"},
-{artist:"Король и Шут",song:"Прыгну со скалы",chords:"Am · C · G · D",level:2,genre:"Панк"},
-{artist:"Король и Шут",song:"Ели мясо мужики",chords:"Am · C · Dm · E",level:1,genre:"Панк"},
-{artist:"Король и Шут",song:"Проклятый старый дом",chords:"Am · C · Dm · E",level:2,genre:"Панк"},
+{
+artist:"ДДТ",
+song:"Это всё",
+chords:"G · D/F# · C · Am · D",
+level:2,
+beat:"перебор"
+},
 
-{artist:"Сектор газа",song:"Лирика",chords:"Am · C · Dm · E",level:2,genre:"Панк"},
-{artist:"Сектор газа",song:"30 лет",chords:"Am · C · G · D",level:1,genre:"Панк"},
-{artist:"Сектор газа",song:"Туман",chords:"Am · C · Dm · E",level:2,genre:"Панк"},
-{artist:"Сектор газа",song:"Пора домой",chords:"Am · C · Dm · E",level:1,genre:"Панк"},
-{artist:"Сектор газа",song:"Демобилизация",chords:"Am · C · G · D",level:1,genre:"Панк"},
+{
+artist:"ДДТ",
+song:"Просвистела",
+chords:"Em · Cadd9 · G · B7",
+level:2,
+beat:"↓↓↑↑↓↑"
+},
 
-{artist:"Ляпис Трубецкой",song:"Ау",chords:"Am · C · D · E",level:2,genre:"Панк"},
-{artist:"Ляпис Трубецкой",song:"Ты кинула",chords:"Am · C · G · D",level:2,genre:"Панк"},
-{artist:"Ляпис Трубецкой",song:"Воины света",chords:"Am · C · G · D",level:2,genre:"Панк"},
+{
+artist:"Чайф",
+song:"Никто не услышит (Ой-йо)",
+chords:"C · G · Am · F · G",
+level:1,
+beat:"↓ ↓↑ ↑↓↑"
+},
 
-{artist:"Ленинград",song:"WWW",chords:"Am · C · G · D",level:2,genre:"Панк"},
-{artist:"Ленинград",song:"Экспонат",chords:"Am · C · G · D",level:2,genre:"Панк"},
-{artist:"Ленинград",song:"В Питере — пить",chords:"Am · C · G · D",level:1,genre:"Панк"},
-{artist:"Ленинград",song:"Мне бы в небо",chords:"Am · C · Dm · E",level:2,genre:"Панк"},
+{
+artist:"Наутилус Помпилиус",
+song:"Гудбай, Америка",
+chords:"Am · C · Dm · E",
+level:2,
+beat:"↓↑↓↑"
+},
 
-{artist:"Алиса",song:"Трасса Е-95",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"Алиса",song:"Небо славян",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
-{artist:"Алиса",song:"Моё поколение",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{
+artist:"Наутилус Помпилиус",
+song:"Я хочу быть с тобой",
+chords:"Am · G7 · C · E7 · F",
+level:2,
+beat:"перебор"
+},
 
-{artist:"Пикник",song:"Египтянин",chords:"Am · Dm · E",level:2,genre:"Русский рок"},
-{artist:"Пикник",song:"У шамана три руки",chords:"Am · C · Dm · E",level:3,genre:"Русский рок"},
-{artist:"Пикник",song:"Из мышеловки",chords:"Am · C · G · D",level:3,genre:"Русский рок"},
+{
+artist:"Наутилус Помпилиус",
+song:"Крылья",
+chords:"Em · B7 · Am",
+level:2,
+beat:"↓↑↓↑"
+},
 
-{artist:"Крематорий",song:"Мусорный ветер",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"Крематорий",song:"Катманду",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+{
+artist:"Агата Кристи",
+song:"Как на войне",
+chords:"Am · G · C · E",
+level:1,
+beat:"↓↑↓↑"
+},
 
-{artist:"Чиж & Co",song:"О любви",chords:"Am · C · Dm · E",level:1,genre:"Русский рок"},
-{artist:"Чиж & Co",song:"Вот пуля просвистела",chords:"Am · C · G · D",level:1,genre:"Русский рок"},
-{artist:"Чиж & Co",song:"Перекрёсток",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"Чиж & Co",song:"А не спеть ли мне песню",chords:"Am · C · G · D",level:1,genre:"Русский рок"},
+{
+artist:"Агата Кристи",
+song:"Опиум для никого",
+chords:"Cm · B♭ · G · Fm",
+level:2,
+beat:"↓↑↓↑"
+},
 
-{artist:"Калинов мост",song:"Родная",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"Калинов мост",song:"Уходили из дома",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+{
+artist:"Би-2",
+song:"Полковнику никто не пишет",
+chords:"Gm · Eb · Cm7 · D7 · F",
+level:2,
+beat:"восьмёрка"
+},
 
-{artist:"Машина времени",song:"Поворот",chords:"Am · Dm · G · C",level:2,genre:"Русский рок"},
-{artist:"Машина времени",song:"За тех, кто в море",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
-{artist:"Машина времени",song:"Костёр",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{
+artist:"Би-2",
+song:"Мой рок-н-ролл",
+chords:"F · Fmaj7 · G · Am · G",
+level:1,
+beat:"перебор"
+},
 
-{artist:"Воскресение",song:"Кто виноват",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"Воскресение",song:"Музыкант",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+{
+artist:"Би-2",
+song:"Варвара",
+chords:"Gm · Eb · Cm · F",
+level:2,
+beat:"↓↑↓↑"
+},
 
-{artist:"Аквариум",song:"Город золотой",chords:"Am · Dm · E",level:1,genre:"Русский рок"},
-{artist:"Аквариум",song:"Поезд в огне",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
-{artist:"Аквариум",song:"Серебро Господа моего",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+{
+artist:"Король и Шут",
+song:"Лесник",
+chords:"Am · F · G · D5 · E5 · G5",
+level:2,
+beat:"↓↑↓↑"
+},
 
-{artist:"Любэ",song:"Конь",chords:"Am · C · Dm · E",level:1,genre:"Поп / рок"},
-{artist:"Любэ",song:"Комбат",chords:"Am · C · G · D",level:1,genre:"Поп / рок"},
-{artist:"Любэ",song:"Давай за",chords:"Am · C · Dm · E",level:1,genre:"Поп / рок"},
+{
+artist:"Король и Шут",
+song:"Кукла колдуна",
+chords:"Dm · Gm · A · F · B♭ · C · A7",
+level:3,
+beat:"↓↑↓↑"
+},
 
-{artist:"ДДТ",song:"Мама это рок-н-ролл",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
+{
+artist:"Король и Шут",
+song:"Прыгну со скалы",
+chords:"Am · F · G · C · Dm",
+level:2,
+beat:"↓↑↓↑"
+},
 
-{artist:"Ночные снайперы",song:"31-я весна",chords:"Am · C · G · D",level:2,genre:"Поп / рок"},
-{artist:"Ночные снайперы",song:"Асфальт",chords:"Am · C · Dm · E",level:2,genre:"Поп / рок"},
-{artist:"Ночные снайперы",song:"Рубеж",chords:"Am · C · G · D",level:2,genre:"Поп / рок"},
+{
+artist:"Сектор Газа",
+song:"Лирика",
+chords:"F#m · E · Bm · A",
+level:2,
+beat:"↓↓↓ ↓↑"
+},
 
-{artist:"7Б",song:"Молодые ветра",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
-{artist:"7Б",song:"Осень",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{
+artist:"Ленинград",
+song:"Экспонат",
+chords:"Bm · G · A · F#",
+level:2,
+beat:"↓↑↓↑"
+},
 
-{artist:"Смысловые галлюцинации",song:"Зачем топтать мою любовь",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
-{artist:"Смысловые галлюцинации",song:"Вечно молодой",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{
+artist:"Мумий Тролль",
+song:"Владивосток 2000",
+chords:"Am · C · D · E",
+level:2,
+beat:"↓↑↓↑"
+},
 
-{artist:"Танцы минус",song:"Половинка",chords:"Am · C · G · D",level:1,genre:"Поп / рок"},
-{artist:"Танцы минус",song:"Город",chords:"Am · C · Dm · E",level:1,genre:"Поп / рок"},
-{artist:"Танцы минус",song:"Цветут цветы",chords:"Am · C · G · D",level:1,genre:"Поп / рок"},
+{
+artist:"Чиж & Co",
+song:"О любви",
+chords:"Am · C · Dm · E",
+level:1,
+beat:"↓ ↓↑↓↑"
+},
 
-{artist:"Кукрыниксы",song:"Звезда",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
-{artist:"Кукрыниксы",song:"По раскрашенной душе",chords:"Am · C · Dm · E",level:2,genre:"Русский рок"},
+{
+artist:"Машина времени",
+song:"Поворот",
+chords:"Am · Dm · G · C",
+level:2,
+beat:"↓↑↓↑"
+},
 
-{artist:"Пилот",song:"Рок",chords:"Am · C · G · D",level:2,genre:"Панк"},
-{artist:"Пилот",song:"Счастья для всех",chords:"Am · C · Dm · E",level:2,genre:"Панк"},
-{artist:"Пилот",song:"Дорога в рай",chords:"Am · C · G · D",level:2,genre:"Панк"},
+{
+artist:"Аквариум",
+song:"Город золотой",
+chords:"Am · Dm · E",
+level:1,
+beat:"перебор"
+},
 
-{artist:"Ария",song:"Беспечный ангел",chords:"Am · C · G · D",level:3,genre:"Русский рок"},
-{artist:"Ария",song:"Штиль",chords:"Am · C · Dm · E",level:3,genre:"Русский рок"},
-{artist:"Ария",song:"Возьми моё сердце",chords:"Am · C · G · D",level:3,genre:"Русский рок"},
-
-{artist:"Кукрыниксы",song:"Солдатская печаль",chords:"Am · C · G · D",level:2,genre:"Русский рок"},
-
-{artist:"Моральный кодекс",song:"До свидания, мама",chords:"Am · C · G · D",level:2,genre:"Поп / рок"},
-
-{artist:"Ноль",song:"Иду, курю",chords:"Am · C · Dm · E",level:1,genre:"Русский рок"},
-{artist:"Ноль",song:"Человек и кошка",chords:"Am · C · G · D",level:1,genre:"Русский рок"},
-
-{artist:"Браво",song:"Этот город",chords:"Am · C · G · D",level:1,genre:"Поп / рок"},
-{artist:"Браво",song:"Любите, девушки",chords:"Am · C · Dm · E",level:1,genre:"Поп / рок"},
-
-{artist:"Секрет",song:"Привет",chords:"Am · C · G · D",level:1,genre:"Поп / рок"},
-{artist:"Секрет",song:"Моя любовь на пятом этаже",chords:"Am · C · Dm · E",level:1,genre:"Поп / рок"}
+{
+artist:"Любэ",
+song:"Конь",
+chords:"Am · C · Dm · E",
+level:1,
+beat:"↓ ↓↑↓↑"
+}
 
 ];
 
-let current=0;
 
-let favorites=JSON.parse(
-  localStorage.getItem("guitarFavorites")||"[]"
+let current = 0;
+
+let favorites =
+JSON.parse(
+localStorage.getItem("guitarFavorites") || "[]"
 );
 
-function filtered(){
-
-  const g=document.getElementById("genre").value;
-  const l=Number(document.getElementById("level").value);
-
-  return songs
-    .map((s,i)=>({s,i}))
-    .filter(x=>
-      (g==="Все жанры"||x.s.genre===g)&&
-      (l===0||x.s.level===l)
-    );
-}
 
 function stars(level){
 
-  return "⭐".repeat(level)+
+  return "⭐".repeat(level) +
          "☆".repeat(5-level);
 
 }
 
-function show(i){
 
-  current=i;
+function filteredSongs(){
 
-  const s=songs[i];
+  const level =
+    Number(
+      document.getElementById("level").value
+    );
 
-  document.getElementById("song").textContent=s.song;
-
-  document.getElementById("artist").textContent=s.artist;
-
-  document.getElementById("chords").textContent=s.chords;
-
-  document.getElementById("stars").textContent=
-    stars(s.level);
-
-  document.getElementById("genreName").textContent=
-    s.genre;
-
-  document.getElementById("favBtn").textContent=
-    isFav(i)?"♥ В избранном":"♡ В избранное";
-
-  document.getElementById("favCount").textContent=
-    "❤️ Избранных: "+favorites.length;
+  return songs
+    .map((song,index)=>({
+      song:song,
+      index:index
+    }))
+    .filter(item =>
+      level === 0 ||
+      item.song.level === level
+    );
 
 }
+
+
+function isFavorite(index){
+
+  return favorites.includes(index);
+
+}
+
+
+function showSong(index){
+
+  current = index;
+
+  const song = songs[index];
+
+  document.getElementById("song")
+    .textContent = song.song;
+
+  document.getElementById("artist")
+    .textContent = song.artist;
+
+  document.getElementById("chords")
+    .textContent = song.chords;
+
+  document.getElementById("beat")
+    .textContent =
+    "🥁 Бой / перебор: " + song.beat;
+
+  document.getElementById("stars")
+    .textContent = stars(song.level);
+
+  document.getElementById("favBtn")
+    .textContent =
+    isFavorite(index)
+    ? "♥ В избранном"
+    : "♡ В избранное";
+
+}
+
 
 function randomSong(){
 
-  const list=filtered();
+  const list = filteredSongs();
 
   if(!list.length){
 
-    alert("Нет песен с такими фильтрами");
+    alert("Нет песен с такой сложностью");
 
     return;
-  }
-
-  let pick=
-    list[Math.floor(Math.random()*list.length)].i;
-
-  if(list.length>1 && pick===current){
-
-    pick=
-      list[Math.floor(Math.random()*list.length)].i;
 
   }
 
-  show(pick);
+  let random =
+    Math.floor(
+      Math.random() * list.length
+    );
+
+  let index = list[random].index;
+
+  if(list.length > 1 && index === current){
+
+    random =
+      Math.floor(
+        Math.random() * list.length
+      );
+
+    index = list[random].index;
+
+  }
+
+  showSong(index);
 
 }
 
-function isFav(i){
-
-  return favorites.includes(i);
-
-}
 
 function toggleFavorite(){
 
-  const p=favorites.indexOf(current);
+  const position =
+    favorites.indexOf(current);
 
-  if(p>=0){
+  if(position >= 0){
 
-    favorites.splice(p,1);
+    favorites.splice(position,1);
 
   }else{
 
@@ -363,93 +605,31 @@ function toggleFavorite(){
     JSON.stringify(favorites)
   );
 
-  show(current);
+  showSong(current);
 
 }
 
-function makeSet(){
-
-  const list=filtered().map(x=>x.i);
-
-  if(!list.length){
-
-    alert("Нет песен для сета");
-
-    return;
-  }
-
-  const pool=[...list].sort(
-    ()=>Math.random()-.5
-  );
-
-  const selected=[];
-  const artists=new Set();
-
-  for(const i of pool){
-
-    if(
-      !artists.has(songs[i].artist)||
-      selected.length>=10
-    ){
-
-      selected.push(i);
-
-      artists.add(songs[i].artist);
-
-    }
-
-    if(selected.length===10) break;
-
-  }
-
-  while(
-    selected.length<
-    Math.min(10,list.length)
-  ){
-
-    selected.push(
-      pool[selected.length]
-    );
-
-  }
-
-  document.getElementById("setItems").innerHTML=
-
-    selected.map((i,n)=>
-
-      `<div class="setitem">
-        <b>
-          ${n+1}. ${songs[i].artist} — ${songs[i].song}
-        </b>
-
-        <span>
-          ${songs[i].chords} · ${stars(songs[i].level)}
-        </span>
-      </div>`
-
-    ).join("");
-
-  document.getElementById("setlist")
-    .style.display="block";
-
-}
-
-document
-  .getElementById("genre")
-  .addEventListener("change",randomSong);
 
 document
   .getElementById("level")
-  .addEventListener("change",randomSong);
+  .addEventListener(
+    "change",
+    randomSong
+  );
 
-document.getElementById("count").textContent=
-  songs.length+" песен";
 
-show(0);
+document.getElementById("count")
+  .textContent =
+  songs.length + " песен";
+
+
+showSong(0);
+
 
 try{
 
-  if(window.Telegram?.WebApp){
+  if(window.Telegram &&
+     window.Telegram.WebApp){
 
     Telegram.WebApp.ready();
 
@@ -457,7 +637,9 @@ try{
 
   }
 
-}catch(e){}
+}catch(error){
+
+}
 
 </script>
 
